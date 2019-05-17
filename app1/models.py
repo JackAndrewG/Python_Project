@@ -55,3 +55,6 @@ class Reserva (models.Model):
 
     def __str__(self):
         return self.Publish()
+
+
+#probando atom !
