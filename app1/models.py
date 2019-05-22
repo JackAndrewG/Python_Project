@@ -1,12 +1,11 @@
 from django.db import models
-
 # Create your models here.
 
 class Complejo (models.Model):
+    usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     nombre_complejo = models.CharField(max_length=40, default='Complejo Deportivo ')
     direccion_complejo = models.TextField(max_length=200, default='sector-calle principal-calle secundaria-nro-referencia')
     telefono_complejo = models.CharField(max_length=19, default='(+593) 098-234-1334')
-    cantidad_canchas = models.IntegerField()
     puntuacion_complejo = models.IntegerField(default='5')
     estado_complejo = models.BooleanField(default = True)
 
@@ -21,7 +20,10 @@ class Complejo (models.Model):
 class Cancha (models.Model):
     codigo_cancha = models.CharField(max_length=3, default='001')
     descripcion_cancha = models.TextField(max_length=150, default='cancha de futbolito')
-    complejo = models.ForeignKey(Complejo, on_delete=models.CASCADE)
+    complejo = models.ForeignKey(Complejo,
+    on_delete=models.CASCADE)
+    # DEBUG: 'auth.User'
+    # WARNING: 'auth.User'
     valor_dia = models.DecimalField(max_digits=7, decimal_places=2)
     valor_noche = models.DecimalField(max_digits=7, decimal_places=2)
     fecha_creacion = models.DateTimeField(auto_now = True)
