@@ -1,0 +1,9 @@
+{%extends 'app1/template_Complejo.html'%}
+{% block title %} Actualizar Complejo {% endblock %}
+{% block fragmentos %}
+<form method="post">
+  {% csrf_token%}
+  {{ form.as_p}}
+  <button type="submit" name="button">Actualizar</button>
+</form>
+{% endblock %}

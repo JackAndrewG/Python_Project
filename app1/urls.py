@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
     path('', views.post_list, name='principal'),
-    path('complejo', views.post_list, name='view_Complejo'),
+    path('complejo', views.complejoAdmin, name='view_Complejo'),
+    path('complejo/actualizar', views.complejoUpdate, name='update_Complejo'),
 ]

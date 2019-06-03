@@ -1,10 +1,139 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Complejo Deportivo </title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body>
-    
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+          <a id="logo-container" href="#" class="brand-logo">Logo</a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="#">Navbar Link</a></li>
+          </ul>
+
+          <ul id="nav-mobile" class="sidenav">
+            <li><a href="#">Navbar Link</a></li>
+          </ul>
+          <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+      </nav>
+
+      <div id="index-banner" class="parallax-container">
+        <div class="section no-pad-bot">
+          <div class="container">
+            <br><br>
+            <h1 class="header center teal-text text-lighten-2"> {{ complejo.nombre_complejo }}</h1>
+            <div class="row center">
+              <h5 class="header col s12 light"> Administración de su complejo deportivo</h5>
+              <h6 class="header col s12 light">{{complejo.direccion_complejo}}</h6>
+            </div>
+            <div class="row center">
+              <a href="#container" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Empezar</a>
+            </div>
+            <br><br>
+
+          </div>
+        </div>
+        <div class="parallax"><img src="{% static "images/background1.jpg" %}" alt="Unsplashed background img 1"></div>
+      </div>
+
+
+      <div class="container" id="container">
+        <div class="section">
+
+          <!--   Icon Section   -->
+          <div class="row">
+            <div class="col s12 m4">
+              <div class="icon-block">
+                <h2 class="center brown-text">Complejo</h2>
+                <h5 class="center">Información de su complejo</h5>
+
+                <p class="light">Verifique y actualice la información de su complejo deportivo </p>
+                  <a href="/complejo/actualizar" class="btn waves-effect waves-light"><i class="material-icons">home</i> VER</a>
+              </div>
+            </div>
+
+            <div class="col s12 m4">
+              <div class="icon-block">
+                <h2 class="center brown-text">Canchas</h2>
+                <h5 class="center">Administración de canchas</h5>
+                <p class="light">visualice, cree y actualice la información de sus canchas</p>
+                <a href="/canchas/ver" class="btn waves-effect waves-light"><i class="material-icons">view_module</i> VER</a>
+              </div>
+            </div>
+
+            <div class="col s12 m4">
+              <div class="icon-block">
+                <h2 class="center brown-text">Reservas</h2>
+                <h5 class="center">Administración de reservas</h5>
+                <p class="light">visualice reportes de sus reservas, cree una nueva reserva o actualice información de las reservas</p>
+                <a href="/reservas/ver" class="btn waves-effect waves-light"><i class="material-icons">content_paste</i> VER</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <div class="row right">
+        <a class="btn-floating btn-large waves-effect waves-light green" href="/"><i class="material-icons">home</i></a>
+      </div>
+
+      <footer class="page-footer teal">
+        <div class="container">
+          <div class="row">
+            <div class="col l6 s12">
+              <h5 class="white-text">Contáctanos</h5>
+              <p class="grey-text text-lighten-4">Estamos ubicados en: {{complejo.direccion_complejo}}
+              o comunicate con nosotros al: {{complejo.telefono_complejo}} , somos una empresa con {{complejo.puntuacion_complejo}} estrellas de calificación dada por nuestros usuarios</p>
+              </p>
+
+
+            </div>
+            <div class="col l3 s12">
+              <h5 class="white-text">Settings</h5>
+              <ul>
+                <li><a class="white-text" href="#!">Link 1</a></li>
+                <li><a class="white-text" href="#!">Link 2</a></li>
+                <li><a class="white-text" href="#!">Link 3</a></li>
+                <li><a class="white-text" href="#!">Link 4</a></li>
+              </ul>
+            </div>
+            <div class="col l3 s12">
+              <h5 class="white-text">Connect</h5>
+              <ul>
+                <li><a class="white-text" href="#!">Link 1</a></li>
+                <li><a class="white-text" href="#!">Link 2</a></li>
+                <li><a class="white-text" href="#!">Link 3</a></li>
+                <li><a class="white-text" href="#!">Link 4</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <div class="container">
+          Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+          </div>
+        </div>
+      </footer>
+
+
+      <!--  Scripts-->
+      <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="js/materialize.js"></script>
+      <script src="js/init.js"></script>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
   </body>
+
 </html>
