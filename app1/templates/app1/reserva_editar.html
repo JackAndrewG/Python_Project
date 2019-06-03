@@ -1,0 +1,17 @@
+{% extends 'app1/base.html' %}
+
+{% block content %}
+	<h1>Modificar cancha</h1>
+    	<form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+
+        	<button type="submit" class="save btn btn-default">Guardar</button>
+    	</form>
+    	<p><label for="id_cancha">Cancha:</label> <select name="cancha" required id="id_cancha">
+	<option value="" selected>---------</option>
+	{% for cancha in canchas %}
+  <option value="{{ cancha.id }}">{{ cancha.descripcion_cancha }}</option>
+  {% endfor %}
+</select></p>
+{% endblock %}
+

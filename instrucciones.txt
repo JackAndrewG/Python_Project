@@ -19,3 +19,9 @@ python manage.py migrate app1
 
 CREATE USER 'AdminFutbolito'@'localhost' IDENTIFIED BY 'futbolito';
 GRANT ALL PRIVILEGES ON * . * TO 'AdminFutbolito'@'localhost';
+
+Recomendaciones:
+Asignar complejo_id a la tabla cancha seleccionando el id de la tabla complejo donde usuario_id sea igual a req.user.id (id logueado)
+SELECT id, nombre_complejo FROM app1_complejo WHERE usuario_id=2
+Mostrar todos los usuarios para reserva y crear el usuario por defecto para el que no se halla registrado.
+Mostrar las canchas solamente del comlejo
