@@ -44,7 +44,14 @@ def cancha_editar(request, pk):
     return render(request, 'app1/cancha_editar.html', {'form': form})
 
 def reserva(request):
-    reservas = list(Reserva.objects.all())
+    id_comple = Complejo.objects.get(usuario_id=request.user.id)
+    canchas = list(Cancha.objects.filter(complejo_id=id_comple))
+    reservs = list(Reserva.objects.all())
+    reservas = []
+    for reserva in reservs:
+    	for cancha in canchas:
+    		if reserva.cancha_id == cancha.id:
+    			reservas.append(reserva) 
     return render(request, 'app1/reserva.html', {'reservas': reservas})
 
 @login_required
