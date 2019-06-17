@@ -4,7 +4,7 @@
 	<h1>Modificar cancha</h1>
     	<form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
-
+				{%%}
         	<button type="submit" class="save btn btn-default">Guardar</button>
     	</form>
     	<p><label for="id_cancha">Cancha:</label> <select name="cancha" required id="id_cancha">
@@ -14,4 +14,3 @@
   {% endfor %}
 </select></p>
 {% endblock %}
-
