@@ -17,10 +17,12 @@
     		{{ form.codigo_reserva }}
 			<label for="{{ form.fecha_reserva.id_for_label }}">Fecha a reservar:</label>
     		{{ form.fecha_reserva }}
-    		<label for="{{ form.hora_reserva.id_for_label }}">Hora a reservar:</label>
-    		{{ form.hora_reserva }}
-    		<label for="{{ form.valor_untario.id_for_label }}">Valor unitario:</label>
-    		{{ form.valor_untario }}
+    		<label for="{{ form.hora_inicio.id_for_label }}">Hora inicio:</label>
+    		{{ form.hora_inicio }}
+            <label for="{{ form.hora_fin.id_for_label }}">Hora fin:</label>
+            {{ form.hora_fin }}
+    		<label for="{{ form.valor_unitario.id_for_label }}">Valor unitario:</label>
+    		{{ form.valor_unitario }}
     		<label for="{{ form.valor_total.id_for_label }}">Valor total:</label>
     		{{ form.valor_total }}
     		<label for="{{ form.estado_reserva.id_for_label }}">Estado:</label>

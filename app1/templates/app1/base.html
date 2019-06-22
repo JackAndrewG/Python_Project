@@ -1,95 +1,100 @@
 {% load static %}
 
-<!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Futbolito</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}"
-		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
-	</head>
-	<body class="is-preload landing">
-		<div id="page-wrapper">
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Futbolito</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+        <!-- Favicons -->
+        <link href="{% static 'img/favicon.ico' %}" rel="icon">
+        <!-- Bootstrap CSS File -->
+        <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <!-- Main Stylesheet File -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+    </head>
+    <body>
 
-			<!-- Header -->
-				<header id="header">
-					<h1 id="logo"><a href="/">Futbolito</a></h1>
-					<nav id="nav">
-						<ul>
-							<li><a href="/">Inicio</a></li>
-							{% if user.is_authenticated %}
+        <!--==========================
+          Header
+        ============================-->
+        <header id="header">
+            <div class="container">
+
+                <div id="logo" class="pull-left">
+                    <h1>
+                        <a href="/" class="scrollto">
+                            <img src="{% static 'img/favicon.ico' %}" style="width: 12%;">FUTBOLITO
+                        </a>
+                    </h1>
+                    <!-- Uncomment below if you prefer to use an image logo -->
+                    <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                    	<li class="menu-has-children"><a href="/">Inicio</a></li>
+                    	{% if user.is_authenticated %}
 							<li><a href="/cancha">Canchas</a></li>
 							<li><a href="/reserva">Reservas</a></li>
 							<li><a href="{% url 'logout' %}" class="button primary">Cerrar Sesión</a></li>
-							<!--<li>
-								<a href="#">Layouts</a>
-								<ul>
-									<li><a href="left-sidebar.html">Left Sidebar</a></li>
-									<li><a href="right-sidebar.html">Right Sidebar</a></li>
-									<li><a href="no-sidebar.html">No Sidebar</a></li>
-									<li>
-										<a href="#">Submenu</a>
-										<ul>
-											<li><a href="#">Option 1</a></li>
-											<li><a href="#">Option 2</a></li>
-											<li><a href="#">Option 3</a></li>
-											<li><a href="#">Option 4</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li> -->
 							{% else %}
 							<li><a href="/admin">Superusuario</a></li>
 							<li><a href="{% url 'login' %}" class="button primary">Iniciar Sesión</a></li>
 							{% endif %}
-						</ul>
-					</nav>
-				</header>
+                    </ul>
+                </nav><!-- #nav-menu-container -->
+            </div>
+        </header><!-- #header -->
 
-			<!-- Banner -->
-				<section id="banner">
-					<div class="content">
-						{% block content %}
+        <!--==========================
+          Intro Section
+        ============================-->
+        <section id="intro">
+
+        </section><!-- #intro -->
+
+      	<section id="banner">
+			<div class="content">
+				{% block content %}
 						
-            			{% endblock %}
-					</div>
-				</section>
-				
+            	{% endblock %}
+			</div>
+		</section>
 
+       
+        <!--==========================
+          Footer
+        ============================-->
+        <footer id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 text-lg-left text-center">
+                        <div class="copyright">
+                            &copy; 2019 Copyright <strong>Futbolito</strong>. 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer><!-- #footer -->
 
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
-			<!-- Footer -->
-				<footer id="footer">
-					<ul class="icons">
-						<li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
-						<li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-						<li><a href="#" class="icon alt fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
-					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
-				</footer>
+        <!-- JavaScript Libraries -->
+        <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+        <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+        <script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
+        <script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
+        <script src="{% static 'lib/magnific-popup/magnific-popup.min.js' %}"></script>
+        <!-- Contact Form JavaScript File -->
+        <script src="{% static 'contactform/contactform.js' %}"></script>
+        <!-- Template Main Javascript File -->
+        <script src="{% static 'js/main.js' %}"></script>
 
-		</div>
-
-		<!-- Scripts -->
-			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
-			<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
-			<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
-			<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
-			<script src="{% static 'assets/js/browser.min.js' %}"></script>
-			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
-			<script src="{% static 'assets/js/util.js' %}"></script>
-			<script src="{% static 'assets/js/main.js' %}"></script>
-
-	</body>
+    </body>
 </html>

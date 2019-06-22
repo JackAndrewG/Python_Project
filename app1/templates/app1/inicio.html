@@ -1,10 +1,64 @@
 {% extends 'app1/base.html' %}
 {% load static %}
 {% block content %}
-<header>
-	<h2>FUTBOLITO</h2>
-	<p>Bienvenido.<br />
-	Login, registro de canchas y reservas !.</p>
-</header>
-<span class="image"><img src="{% static 'images/messi_2.jpg' %}" alt="" /></span>
+<section id="call-to-action">
+    <div class="container">
+        <div class="col-lg-12 text-center">
+            <h3 class="cta-title" >RESERVA ONLINE EL TURNO QUE ESTAS BUSCANDO</h3>
+            <h5 class="cta-text">Fácil, rápido y seguro </h5>
+            <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+            <!--  Card -->
+        <!--  Fin Card -->
+    </div>
+</section>
+
+
+<section id="contact">
+    <div class="container">
+        <div class="row wow fadeInUp">
+
+            <div class="col-lg-4 col-md-4">
+                <div class="contact-about">
+                    <h3>Futbolito</h3>
+                    <p>
+                        Es un complejo deportivo que ofrece el servicio de alquiler de canchas sintéticas de fútbol a los habitantes de la ciudad de Loja y del País, que les guste entretenerse y divertirse jugando al fútbol, haciéndolos sentir parte de nosotros y superando sus expectativas en cuanto a la calidad en el servicio. Comprometidos con nuestros usuarios, podrás encontrar servicio como:
+                        Información de canchas, precio, horarios, así mismo te permitirá reservar en las mejores canchas sintéticas que tenemos, de una forma más óptima y actualizada, para divertirte y compartir grandes momentos con tus familiares y amigos:
+                        “ Si no te esfuerzas hasta el máximo ¿Cómo sabrás donde está tu límite? ”
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4">
+                <div class="info">
+                    <div>
+                        <i class="ion-ios-location-outline"></i>
+                        <p>Av Pio Jaramillo Alvarado y Heroes del cenepa, Loja 110101</p>
+                    </div>
+
+                    <div>
+                        <i class="ion-ios-email-outline"></i>
+                        <p>canchascalvacalva@gmail.com</p>
+                    </div>
+
+                    <div>
+                        <i class="ion-ios-telephone-outline"></i>
+                        <p>+1 5589 55488 55s</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-8">
+                <div class="form">
+                    <div id="sendmessage">Your message has been sent. Thank you!</div>
+                    <div id="errormessage"></div>
+                    <img src="{% static 'img/about-img.jpg' %}" style="width: 140%; border-radius: 10px;">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- #contact -->
 {% endblock %}

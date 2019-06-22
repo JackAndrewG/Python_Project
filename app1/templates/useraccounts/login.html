@@ -1,24 +1,112 @@
-{% extends "app1/base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript"></script>
+        <!--===============================================================================================-->
+        <link href="{% static 'img/favicon.ico' %}" rel="icon">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+        <script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+        <script src="{% static 'javascripts/jquery.validate.min.js' %}" type="text/javascript"></script>
+    </head>
+    <body>
 
-{% block content %}
+        <div class="limiter">
+           <div class="container-login100" style="background-image: url('{% static "images/bg-01.jpg" %}');">
+                <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+    <span class="login100-form-title p-b-53">
+        Inicio de sesión 
+    </span>
     {% if form.errors %}
         <p>Tu nombre de usuario y contraseña no coinciden. Inténtalo de nuevo.</p>
     {% endif %}
+    <div class="p-t-31 p-b-9">
+        <span class="txt1">
+            Nombre de usuario
+        </span>
+    </div>
+    
+    <div class="wrap-input100" >
+        <input class="input100" type="text" name="username" autofocus required id="id_username">
+        <span class="focus-input100"></span>
+    </div>
 
-    <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-        <table>
-        <tr>
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
-        </tr>
-        </table>
+    <div class="p-t-13 p-b-9">
+        <span class="txt1">
+            Contraseña
+        </span>
 
-        <input type="submit" value="INGRESAR" />
+    </div>
+    <div class="wrap-input100" >
+        <input class="input100" type="password" name="password" required id="id_password" >
+        <span class="focus-input100"></span>
+    </div>
+
+    <div class="container-login100-form-btn m-t-17">
+        <button type="submit" class="login100-form-btn">
+            Iniciar Sesión
+        </button>
         <input type="hidden" name="next" value="{{ next }}" />
-    </form>
-{% endblock %}
+    </div>
+
+    <div class="w-full text-center p-t-10">
+        <a href="/" class="txt2 bo1">
+            Principal
+        </a>
+    </div>
+</form>
+
+   
+                </div>
+            </div>
+        </div>
+
+
+        <div id="dropDownSelect1"></div>
+        <!--===============================================================================================-->
+        
+        <!--===============================================================================================-->
+        <script src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
+        <script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'vendor/countdowntime/countdowntime.js' %}"></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'js/mainSesion.js' %}"></script>
+
+    </body>
+</html>  
+
+

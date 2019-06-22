@@ -44,8 +44,9 @@ class Reserva (models.Model):
     cancha = models.ForeignKey(Cancha, on_delete=models.CASCADE)
     #numero_cancha relacionar
     fecha_reserva = models.DateField()
-    hora_reserva = models.TimeField(default='12:00')
-    valor_untario = models.DecimalField(max_digits=7, decimal_places=2)
+    hora_inicio = models.TimeField(default='12:00')
+    hora_fin = models.TimeField(default='13:00')
+    valor_unitario = models.DecimalField(max_digits=7, decimal_places=2)
     valor_total = models.DecimalField(max_digits=7, decimal_places=2)
     fecha_creacion = models.DateTimeField(auto_now = True)
     estado_reserva = models.BooleanField(default=True)

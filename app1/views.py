@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 def inicio(request):
     return render(request, 'app1/inicio.html', {})
 
+@login_required
 def cancha(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id)
     canchas = list(Cancha.objects.filter(complejo_id=id_comple))
@@ -43,6 +44,7 @@ def cancha_editar(request, pk):
         form = CanchaForm(instance=cancha)
     return render(request, 'app1/cancha_editar.html', {'form': form})
 
+@login_required
 def reserva(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id)
     canchas = list(Cancha.objects.filter(complejo_id=id_comple))
@@ -80,7 +82,9 @@ def reserva_editar(request, pk):
             reserva.save()
             return redirect('reserva')
     else:
+        id_comple = Complejo.objects.get(usuario_id=request.user.id)
+        canchas = list(Cancha.objects.filter(complejo_id=id_comple))
         form = ReservaForm(instance=reserva)
-    return render(request, 'app1/reserva_editar.html', {'form': form})
+    return render(request, 'app1/reserva_editar.html', {'form': form, 'canchas': canchas})
 
     
