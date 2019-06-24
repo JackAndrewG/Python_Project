@@ -86,5 +86,3 @@ def reserva_editar(request, pk):
         canchas = list(Cancha.objects.filter(complejo_id=id_comple))
         form = ReservaForm(instance=reserva)
     return render(request, 'app1/reserva_editar.html', {'form': form, 'canchas': canchas})
-
-    
