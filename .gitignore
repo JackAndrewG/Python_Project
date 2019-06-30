@@ -30,3 +30,7 @@ src/website/settingslocal.py
 stunnel.log
 
 .ruby-version
+
+api/__pycache__
+app1/__pycache__
+futbolito/__pycache__
