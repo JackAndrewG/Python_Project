@@ -25,7 +25,7 @@ SECRET_KEY = 'b*jsfdvm28xj4qp4#b43%cuj$m5jstnmq3h&$c%6co!&#a^!*4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '192.168.1.15', 'localhost']
 
 
 # Application definition
@@ -37,8 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app1',
+    'rest_framework',
+	'rest_framework_swagger',
+    'app1.apps.App1Config',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,8 +90,8 @@ DATABASES = {
         'default': {
             'ENGINE': 'mysql_cymysql',
             'NAME': 'futbolitoDB',
-            'USER': 'root',
-            'PASSWORD': 'albert123',
+            'USER': 'JackAndrew',
+            'PASSWORD': 'jack',
             'HOST': 'localhost',
             'PORT': '3306',
         }
