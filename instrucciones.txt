@@ -25,3 +25,8 @@ Asignar complejo_id a la tabla cancha seleccionando el id de la tabla complejo d
 SELECT id, nombre_complejo FROM app1_complejo WHERE usuario_id=2
 Mostrar todos los usuarios para reserva y crear el usuario por defecto para el que no se halla registrado.
 Mostrar las canchas solamente del comlejo
+
+
+instlacion de librerias Django:
+pip install django-rest-swagger
+pip install djangorestframework
