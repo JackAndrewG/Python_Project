@@ -32,8 +32,9 @@ class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
     def get_queryset(self):
-        if (self.request.query_params.get('estado')):
+        if (self.request.query_params.get('usuario') and self.request.query_params.get('estado')):
+            user = self.request.query_params.get('usuario')
             estado = self.request.query_params.get('estado')
-            return Reserva.objects.filter(estado_reserva=estado)
+            return Reserva.objects.filter(usuario=user, estado_reserva=estado)
         else:
             return self.queryset
