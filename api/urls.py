@@ -6,7 +6,7 @@ from api import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'complejos', views.ComplejoViewSet)
-router.register(r'canchas', views.CanchaViewSet)
+router.register(r'canchas', views.CanchaViewSet, base_name='canchas')
 
 urlpatterns = [
     path('', include(router.urls)),
