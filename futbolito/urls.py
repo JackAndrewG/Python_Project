@@ -11,6 +11,6 @@ urlpatterns = [
 	path('', include('app1.urls')),
     path('accounts/login/', auth_views.LoginView.as_view(template_name="useraccounts/login.html"), name="login"),
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
-	path('', include('api.urls')),
+	path('api/', include('api.urls')),
     url(r'^documentacion/', schema_view)
 ]

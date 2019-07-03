@@ -7,6 +7,7 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'complejos', views.ComplejoViewSet)
 router.register(r'canchas', views.CanchaViewSet, base_name='canchas')
+router.register(r'reservas', views.ReservaViewSet, base_name='reservas')
 
 urlpatterns = [
     path('', include(router.urls)),
