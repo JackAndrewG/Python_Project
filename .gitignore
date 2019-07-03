@@ -1,5 +1,5 @@
+*.pyc
+
 api/__pycache__
 app1/__pycache__
 futbolito/__pycache__
-
-*.pyc
