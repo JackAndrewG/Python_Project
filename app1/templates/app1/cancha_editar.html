@@ -1,11 +1,13 @@
 {% extends 'app1/base.html' %}
 
 {% block content %}
+<div class="col-sm-12">
 	<h1>Modificar cancha</h1>
     	<form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         	<button type="submit" class="save btn btn-default">Guardar</button>
     	</form>
+</div>
 {% endblock %}
 
 <!-- Crear formulario para editar campos -->

@@ -1,33 +1,106 @@
 {% extends 'app1/base.html' %}
 
 {% block content %}
-	<h1>Modificar reserva</h1>
-    	<form method="POST" class="post-form">
-    		{% csrf_token %}
-    		<label for="{{ form.usuario.id_for_label }}">Usuario:</label>
-    		{{ form.usuario }}
-    		<label for="id_cancha">Cancha:</label> 
-    		<select name="cancha" required id="id_cancha">
-    			<option value="" selected>---------</option>
-				{% for cancha in canchas %}
-  					<option value="{{ cancha.id }}">{{ cancha.descripcion_cancha }}</option>
-  				{% endfor %}
-			</select>
-			<label for="{{ form.codigo_reserva.id_for_label }}">Código reserva:</label>
-    		{{ form.codigo_reserva }}
-			<label for="{{ form.fecha_reserva.id_for_label }}">Fecha a reservar:</label>
-    		{{ form.fecha_reserva }}
-    		<label for="{{ form.hora_inicio.id_for_label }}">Hora inicio:</label>
-    		{{ form.hora_inicio }}
-            <label for="{{ form.hora_fin.id_for_label }}">Hora fin:</label>
-            {{ form.hora_fin }}
-    		<label for="{{ form.valor_unitario.id_for_label }}">Valor unitario:</label>
-    		{{ form.valor_unitario }}
-    		<label for="{{ form.valor_total.id_for_label }}">Valor total:</label>
-    		{{ form.valor_total }}
-    		<label for="{{ form.estado_reserva.id_for_label }}">Estado:</label>
-    		{{ form.estado_reserva }}
-	        <button type="submit" class="save btn btn-default">Guardar</button>
-    	</form>
+<div class="col-sm-12">
+    <h1>Modificar reserva</h1>
+        <form method="POST" class="post-form">
+            {% csrf_token %}
+            <label for="id_usuario">Usuario:</label>
+            <select name="usuario" required id="usuario_id">
+                <option value="" selected>---------</option>
+                {% for usuario in usuarios %}
+                    <option value="{{ usuario.id }}">{{ usuario.username }}</option>
+                {% endfor %}
+            </select>
+            <label for="id_cancha">Cancha:</label> 
+            <select name="cancha" required id="id_cancha">
+                <option value="" selected>---------</option>
+                {% for cancha in canchas %}
+                    <option value="{{ cancha.id }}">{{ cancha.descripcion_cancha }}</option>
+                {% endfor %}
+            </select>
+            <label for="{{ form.codigo_reserva.id_for_label }}">Código reserva:</label>
+            {{ form.codigo_reserva }}
+            <label for="id_fecha_reserva">Fecha a reservar:</label>
+            <input name="fecha_reserva" required="" id="id_fecha_reserva" type="date" max="2019-12-31">
+            <label for="id_hora_inicio">Hora inicio:</label>
+            <input type="time" name="hora_inicio" value="12:00" step="1800" required id="id_hora_inicio">
+            <label for="id_hora_fin">Hora fin:</label>
+            <input type="time" name="hora_fin" step="1800" required id="id_hora_fin">
+            <script>
+                function calcularHoraActual(){
+                    var f = new Date();
+                    var yyyy = f.getFullYear();
+                    var mm = f.getMonth()+1;
+                    var dd = f.getDate();
+                    var hh = f.getHours();
+                    var min = f.getMinutes();
+                    var ss = f.getSeconds(); 
+                    if(dd<10) {
+                        dd='0'+dd
+                    } 
+                    if(mm<10) {
+                        mm='0'+mm
+                    } 
+                    f = yyyy+'-'+mm+'-'+dd;
+                    $("#id_fecha_reserva").attr("min", f);
+                    var fecha_ing = $("#id_fecha_reserva").val();
+                    if (fecha_ing == f){
+                        if (min<=30){
+                            h = hh+':'+30;
+                        } else {
+                            hh = hh+1
+                            h = hh+':'+'00';
+                        }
+                        $("#id_hora_inicio").attr("value", h);
+                        $("#id_hora_inicio").attr("min", h);
+                    } else {
+                        $("#id_hora_inicio").attr("value", "08:00");
+                        $("#id_hora_inicio").attr("min", "08:00"/*Hora de apertura del complejo*/);
+                    }
+                    
+                }
+                function cambiarHoraFin(){
+                    var h_fin = $("#id_hora_inicio").val();
+                    var hh_fin = h_fin.substr(0, 2);
+                    var min_fin = h_fin.substr(3, 5);
+                    hh_fin = parseFloat(hh_fin);
+                    hh_fin = hh_fin + 1;
+                    if(hh_fin<10){
+                        hh_fin='0'+hh_fin
+                    }
+                    h_fin = hh_fin+':'+min_fin;
+                    $("#id_hora_fin").attr("value", h_fin/*Horra q cierra el comlejo*/);
+                    $("#id_hora_fin").attr("min", h_fin);
+                }
+            $(document).ready(function(){   
+                calcularHoraActual();
+                cambiarHoraFin();
+            });
+
+            $("#id_fecha_reserva").keyup(function () {
+                calcularHoraActual();
+                cambiarHoraFin();
+            });
+            $("#id_fecha_reserva").change(function () {
+                calcularHoraActual();
+                cambiarHoraFin();
+            });
+            $("#id_hora_inicio").keyup(function () {
+                cambiarHoraFin();
+            });
+            $("#id_hora_inicio").change(function () {
+                cambiarHoraFin();
+            });
+            </script>
+            <label for="{{ form.valor_unitario.id_for_label }}">Valor unitario:</label>
+            {{ form.valor_unitario }}
+            <label for="{{ form.valor_total.id_for_label }}">Valor total:</label>
+            {{ form.valor_total }}
+            <label for="{{ form.estado_reserva.id_for_label }}">Estado:</label>
+            {{ form.estado_reserva }}
+            <button type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+        </div>    
 {% endblock %}
 

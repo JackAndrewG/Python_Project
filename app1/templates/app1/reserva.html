@@ -2,6 +2,24 @@
 Seleccionar una de las canchas del complejo -->
 {% extends 'app1/base.html' %}
 {% block content %}
+<!-- Cambio en modelos: codigo_cancha > unico -->
+  {% if messages %}
+    <div class="row">
+      <div class="col-sm-12">
+          {% for message in messages %}
+          <p 
+          {% if message.tags == "success" %} 
+          class="alert alert-success"
+          {% else %}
+          class="alert alert-danger"
+          {% endif %}>{{ message }}
+        </p>
+        {% endfor %}
+      </div>
+    </div>   
+{% endif %}
+
+<div class="col-sm-12">
 <table class="table">
   <thead>
     <tr>
@@ -35,6 +53,8 @@ Seleccionar una de las canchas del complejo -->
   </tbody>
 </table>
 
-<a href="{% url 'reserva_nueva' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Añadir nueva reserva</span></a>
+<a href="{% url 'reserva_nueva' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Añadir nueva reserva</span></a>  
+</div>
+
 
 {% endblock %}

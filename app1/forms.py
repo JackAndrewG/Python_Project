@@ -12,7 +12,4 @@ class ReservaForm(forms.ModelForm):
 
     class Meta:
         model = Reserva
-        fields = ('usuario', 'cancha', 'codigo_reserva', 'fecha_reserva', 'hora_inicio', 'hora_fin', 'valor_unitario', 'valor_total', 'estado_reserva',)
-        widgets= {
-            'fecha_reserva': forms.SelectDateWidget(attrs={'class': 'form-control'}),
-        }
+        fields = ('usuario','cancha', 'codigo_reserva', 'fecha_reserva', 'hora_inicio', 'hora_fin', 'valor_unitario', 'valor_total', 'estado_reserva',)
