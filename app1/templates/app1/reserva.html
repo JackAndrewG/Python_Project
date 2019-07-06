@@ -23,7 +23,6 @@ Seleccionar una de las canchas del complejo -->
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Código</th>
       <th scope="col">Usuario</th>
       <th scope="col">Cancha</th>
@@ -38,8 +37,7 @@ Seleccionar una de las canchas del complejo -->
   <tbody>
     {% for reserva in reservas %}
     <tr>
-      <th scope="row">1</th>
-      <td><a href="{% url 'reserva_enlace' pk=reserva.pk %}">{{ reserva.codigo_reserva }}</a></td>
+      <td><a href="{% url 'reserva_enlace' pk=reserva.pk %}">0000{{ reserva.id }}</a></td>
       <td>{{ reserva.usuario }}</td>
       <td>{{ reserva.cancha }}</td>
       <td>{{ reserva.fecha_reserva }}</td>
