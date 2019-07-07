@@ -2,32 +2,63 @@
 
 {% block content %}
 <div class="col-sm-12">
-    <h1>Modificar reserva</h1>
+    <h1>{{ titulo }}</h1>
         <form method="POST" class="post-form">
             {% csrf_token %}
-            <label for="id_usuario">Usuario:</label>
-            <select name="usuario" required id="usuario_id">
-                <option value="" selected>---------</option>
-                {% for usuario in usuarios %}
-                    <option value="{{ usuario.id }}">{{ usuario.username }}</option>
-                {% endfor %}
-            </select>
-            <label for="id_cancha">Cancha:</label> 
-            <select name="cancha" required id="id_cancha">
-                <option value="" selected>---------</option>
-                {% for cancha in canchas %}
-                    <option value="{{ cancha.id }}">{{ cancha.descripcion_cancha }}</option>
-                {% endfor %}
-            </select>
-            <label for="{{ form.codigo_reserva.id_for_label }}">Código reserva:</label>
-            {{ form.codigo_reserva }}
-            <label for="id_fecha_reserva">Fecha a reservar:</label>
-            <input name="fecha_reserva" required="" id="id_fecha_reserva" type="date" max="2019-12-31">
-            <label for="id_hora_inicio">Hora inicio:</label>
-            <input type="time" name="hora_inicio" value="12:00" step="1800" required id="id_hora_inicio">
-            <label for="id_hora_fin">Hora fin:</label>
-            <input type="time" name="hora_fin" step="1800" required id="id_hora_fin">
-            <script>
+
+            <div class="form-group">
+                <label for="id_usuario">Usuario:</label>
+                <select name="usuario" required id="usuario_id">
+                    <option value="" selected>---------</option>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.id }}">{{ usuario.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+                
+            <div class="form-group">
+                <label for="id_cancha">Cancha:</label> 
+                <select name="cancha" required id="id_cancha">
+                    <option value="" selected>---------</option>
+                    {% for cancha in canchas %}
+                        <option value="{{ cancha.id }}">{{ cancha.descripcion_cancha }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="id_fecha_reserva">Fecha a reservar:</label>
+                <input name="fecha_reserva" required="" id="id_fecha_reserva" type="date" max="2019-12-31">
+            </div>
+
+            <div class="form-group">
+                <label for="id_hora_inicio">Hora inicio:</label>
+                <input type="time" name="hora_inicio" value="12:00" step="1800" required id="id_hora_inicio">
+                <label for="id_hora_fin">Hora fin:</label>
+                <input type="time" name="hora_fin" step="1800" required id="id_hora_fin">
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="id_valor_unitario">Valor unitario:</label>
+                    <input class="form-control" type="number" name="valor_unitario" step="0.01" required id="id_valor_unitario" readonly="true">
+                </div>
+                <div class="col-sm-2">
+                    <label for="id_valor_total">Valor total:</label>
+                    <input class="form-control" type="number" name="valor_total" step="0.01" required id="id_valor_total" readonly="true">
+                </div>
+            </div>
+
+            <br>
+            <div class="form-group">
+                <label for="{{ form.estado_reserva.id_for_label }}">Estado:</label>
+                {{ form.estado_reserva }}
+            </div>
+            
+            <input class="btn btn-primary" type="submit" value="Guardar">
+        </form>
+        </div> 
+        <script>
                 function calcularHoraActual(){
                     var f = new Date();
                     var yyyy = f.getFullYear();
@@ -55,8 +86,8 @@
                         $("#id_hora_inicio").attr("value", h);
                         $("#id_hora_inicio").attr("min", h);
                     } else {
-                        $("#id_hora_inicio").attr("value", "08:00");
-                        $("#id_hora_inicio").attr("min", "08:00"/*Hora de apertura del complejo*/);
+                        $("#id_hora_inicio").attr("value", "{{ complejo.hora_apertura }}");
+                        $("#id_hora_inicio").attr("min", "{{ complejo.hora_apertura }}"/*Hora de apertura del complejo*/);
                     }
                     
                 }
@@ -70,9 +101,59 @@
                         hh_fin='0'+hh_fin
                     }
                     h_fin = hh_fin+':'+min_fin;
-                    $("#id_hora_fin").attr("value", h_fin/*Horra q cierra el comlejo*/);
+                    $("#id_hora_fin").attr("value", h_fin/*Hora q cierra el comlejo*/);
                     $("#id_hora_fin").attr("min", h_fin);
+                    $("#id_hora_fin").attr("max", "{{ complejo.hora_cierre }}");
                 }
+
+                function determinarValorUnitario(){
+                    var cancha_select = $("#id_cancha").val();
+                    var hora_fin = $("#id_hora_fin").val();
+                    var v_unitario = 0;
+                    {% for cancha in canchas %}
+                        if (cancha_select == {{ cancha.id }}) {
+                            v_unitario = {{ cancha.valor_dia }}
+                            if (hora_fin >= '19:00') {
+                                v_unitario = {{ cancha.valor_noche }}
+                            } 
+                        } 
+                        if (v_unitario == 0){
+                            v_unitario = {{ cancha.valor_dia }}
+                        }
+                        $("#id_valor_unitario").val(v_unitario);
+                    {% endfor %}
+                    calcularValorTotal();
+                }
+
+                function calcularValorTotal(){
+                    var valor_unitario = $("#id_valor_unitario").val();
+                    var valor_total = 0;
+
+                    var hora_inicio = $("#id_hora_inicio").val();
+                    var hh_inicio = hora_inicio.substr(0, 2);
+                    var min_inicio = hora_inicio.substr(3, 5);
+                    hh_inicio = parseFloat(hh_inicio);
+                    min_inicio = parseFloat(min_inicio);
+
+                    var hora_fin = $("#id_hora_fin").val();
+                    var hh_fin = hora_fin.substr(0, 2);
+                    var min_fin = hora_fin.substr(3, 5);
+                    hh_fin = parseFloat(hh_fin);
+                    min_fin = parseFloat(min_fin);
+
+                    var nro_horas = hh_fin - hh_inicio;
+                    var nro_minutos = min_fin - min_inicio;
+
+                    if (nro_minutos == 0) {
+                        valor_total = valor_unitario * nro_horas;
+                    } else {
+                        var valor_min = valor_unitario * 0.5;
+                        valor_total = (valor_unitario * nro_horas) + valor_min;
+                    }
+                    $("#id_valor_total").val(valor_total);
+                }
+
+
             $(document).ready(function(){   
                 calcularHoraActual();
                 cambiarHoraFin();
@@ -86,21 +167,32 @@
                 calcularHoraActual();
                 cambiarHoraFin();
             });
+
             $("#id_hora_inicio").keyup(function () {
                 cambiarHoraFin();
+                determinarValorUnitario();
             });
             $("#id_hora_inicio").change(function () {
                 cambiarHoraFin();
+                determinarValorUnitario();
             });
-            </script>
-            <label for="{{ form.valor_unitario.id_for_label }}">Valor unitario:</label>
-            {{ form.valor_unitario }}
-            <label for="{{ form.valor_total.id_for_label }}">Valor total:</label>
-            {{ form.valor_total }}
-            <label for="{{ form.estado_reserva.id_for_label }}">Estado:</label>
-            {{ form.estado_reserva }}
-            <button type="submit" class="save btn btn-default">Guardar</button>
-        </form>
-        </div>    
+
+            $("#id_hora_fin").keyup(function () {
+                determinarValorUnitario();
+            });
+            $("#id_hora_fin").change(function () {
+                determinarValorUnitario();
+            });
+
+         
+            $("#id_cancha").keyup(function () {
+                determinarValorUnitario();
+            });
+            $("#id_cancha").change(function () {
+                determinarValorUnitario();
+            });
+
+            
+            </script>   
 {% endblock %}
 

@@ -5,12 +5,25 @@
 <!-- Agregar boton de añadir -->
 {% extends 'app1/base.html' %}
 {% block content %}
-
+{% if messages %}
+    <div class="row">
+      <div class="col-sm-12">
+          {% for message in messages %}
+          <p 
+          {% if message.tags == "success" %} 
+          class="alert alert-success"
+          {% else %}
+          class="alert alert-danger"
+          {% endif %}>{{ message }}
+        </p>
+        {% endfor %}
+      </div>
+    </div>   
+{% endif %}
 <div class="col-sm-12">
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Código</th>
       <th scope="col">Decripción</th>
       <th scope="col">Valor de día</th>
@@ -20,8 +33,7 @@
   <tbody>
     {% for cancha in canchas %}
     <tr>
-      <th scope="row">1</th>
-      <td>{{ cancha.codigo_cancha }}</td>
+      <td>0000{{ cancha.id }}</td>
       <td><a href="{% url 'cancha_enlace' pk=cancha.pk %}">{{ cancha.descripcion_cancha }}</a></td>
       <td>{{ cancha.valor_dia }}</td>
       <td>{{ cancha.valor_noche }}</td>

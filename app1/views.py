@@ -46,11 +46,11 @@ def cancha_nueva(request):
             cancha.complejo = id_comple
             cancha.fecha_creacion = timezone.now()
             cancha.save()
+            messages.success(request, 'Cancha guardada con éxito !')
             return redirect('cancha')
     else:
-
         form = CanchaForm()
-    return render(request, 'app1/cancha_editar.html', {'form': form})
+    return render(request, 'app1/cancha_editar.html', {'titulo': 'Agregar cancha', 'form': form})
 
 @login_required
 def cancha_editar(request, pk):
@@ -61,28 +61,41 @@ def cancha_editar(request, pk):
             cancha = form.save(commit=False)
             cancha.fecha_creacion = timezone.now()
             cancha.save()
+            messages.success(request, 'Cancha modificada con éxito !')
             return redirect('cancha')
     else:
         form = CanchaForm(instance=cancha)
-    return render(request, 'app1/cancha_editar.html', {'form': form})
+    return render(request, 'app1/cancha_editar.html', {'titulo': 'Editar cancha', 'form': form})
 
 @login_required
 def reserva(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id)
     canchas = list(Cancha.objects.filter(complejo_id=id_comple))
-    reservs = list(Reserva.objects.all())
+    reservs = list(Reserva.objects.filter(estado_reserva=1))
     reservas = []
     for reserva in reservs:
     	for cancha in canchas:
     		if reserva.cancha_id == cancha.id:
     			reservas.append(reserva)
-    return render(request, 'app1/reserva.html', {'reservas': reservas})
+
+    #Actualización del estado de reservas (Cancelación de reservas vencidas)
+    ecuador = pytz.timezone('America/Guayaquil')
+    fecha_hoy = datetime.datetime.now(ecuador)
+    fecha_hoy = fecha_hoy.strftime("%Y-%m-%d")
+    fecha_hoy = datetime.datetime.strptime(fecha_hoy, "%Y-%m-%d").date()
+    actualizacionReservas = []
+    for reserva_act in reservas:
+        if(reserva_act.fecha_reserva < fecha_hoy):
+            Reserva.objects.filter(id=reserva_act.id).update(estado_reserva=0)
+        else:
+            actualizacionReservas.append(reserva_act)
+    return render(request, 'app1/reserva.html', {'reservas': actualizacionReservas})
 
 @login_required
 def reserva_nueva(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id) #Obtener el complejo que le pertenece al administador logueado
     canchas = list(Cancha.objects.filter(complejo_id=id_comple)) #Obtener las canchas que le pertenecen a ese complejo
-    reservs = list(Reserva.objects.all()) #Obtener todas las reservas 
+    reservs = list(Reserva.objects.filter(estado_reserva=1)) #Obtener todas las reservas 
     reservas = [] #Arreglo para guardar todas las reservas del complejo
     for reserva1 in reservs: #Recorrer todas las reservas 
         for cancha in canchas: #Recorrer todas las canchas del complejo
@@ -144,21 +157,16 @@ def reserva_nueva(request):
         canchas = list(Cancha.objects.filter(complejo_id=id_comple))
         usuarios = list(User.objects.filter(is_staff=0))
         form = ReservaForm()
-    return render(request, 'app1/reserva_editar.html', {'form': form, 'canchas': canchas, 'usuarios': usuarios})
+    return render(request, 'app1/reserva_editar.html', {'titulo': 'Agregar reserva', 'form': form, 'canchas': canchas, 'usuarios': usuarios, 'complejo': id_comple})
 
 @login_required
 def reserva_editar(request, pk):
-    reserva = get_object_or_404(Reserva, pk=pk)
     if request.method == "POST":
-        form = ReservaForm(request.POST, instance=reserva)
-        if form.is_valid():
-            reserva = form.save(commit=False)
-            reserva.fecha_creacion = timezone.now()
-            reserva.save()
-            return redirect('reserva')
+        Reserva.objects.filter(id=pk).update(estado_reserva=0)
+        messages.success(request, 'Reserva cancelada !')
+        return redirect('reserva')
     else:
         id_comple = Complejo.objects.get(usuario_id=request.user.id)
         canchas = list(Cancha.objects.filter(complejo_id=id_comple))
         usuarios = list(User.objects.filter(is_staff=0))
-        form = ReservaForm(instance=reserva)
-    return render(request, 'app1/reserva_editar.html', {'form': form, 'canchas': canchas, 'usuarios': usuarios})
+    return render(request, 'app1/reserva_modificar.html', {'titulo': 'Cancelar reserva'})
