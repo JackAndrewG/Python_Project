@@ -1,13 +1,17 @@
 {% extends 'app1/base.html' %}
 
 {% block content %}
-<div class="col-sm-12">
-	<h1>{{ titulo }}</h1>
-    	<form method="POST" class="post-form">{% csrf_token %}
-        	{{ form.as_p }}
-        	<input class="btn btn-primary" type="submit" value="Guardar">
-    	</form>
-</div>
+<section id="call-to-action">
+	<div class="container">
+		<div class="col-sm-12">
+			<h1>{{ titulo }}</h1>
+			<form method="POST" class="post-form">{% csrf_token %}
+				{{ form.as_p }}
+				<input class="btn btn-primary" type="submit" value="Guardar">
+			</form>
+		</div>
+	</div>
+</section>
 {% endblock %}
 
 <!-- Crear formulario para editar campos -->

@@ -2,57 +2,56 @@
 Seleccionar una de las canchas del complejo -->
 {% extends 'app1/base.html' %}
 {% block content %}
-<!-- Cambio en modelos: codigo_cancha > unico -->
+<section id="call-to-action">
+<div class="container">
+  <!-- Cambio en modelos: codigo_cancha > unico -->
   {% if messages %}
-    <div class="row">
-      <div class="col-sm-12">
-          {% for message in messages %}
-          <p 
-          {% if message.tags == "success" %} 
-          class="alert alert-success"
-          {% else %}
-          class="alert alert-danger"
-          {% endif %}>{{ message }}
-        </p>
+  <div class="row">
+    <div class="col-sm-12">
+      {% for message in messages %}
+      <p {% if message.tags == "success" %} class="alert alert-success" {% else %} class="alert alert-danger"
+        {% endif %}>{{ message }}
+      </p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="col-sm-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Código</th>
+          <th scope="col">Usuario</th>
+          <th scope="col">Cancha</th>
+          <th scope="col">Fecha reserva</th>
+          <th scope="col">Hora inicio</th>
+          <th scope="col">Hora fin</th>
+          <th scope="col">Valor unitario</th>
+          <th scope="col">Valor total</th>
+          <th scope="col">Estado de reserva</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reserva in reservas %}
+        <tr>
+          <td><a href="{% url 'reserva_enlace' pk=reserva.pk %}">0000{{ reserva.id }}</a></td>
+          <td>{{ reserva.usuario }}</td>
+          <td>{{ reserva.cancha }}</td>
+          <td>{{ reserva.fecha_reserva }}</td>
+          <td>{{ reserva.hora_inicio }}</td>
+          <td>{{ reserva.hora_fin }}</td>
+          <td>{{ reserva.valor_unitario }}</td>
+          <td>{{ reserva.valor_total }}</td>
+          <td>{{ reserva.estado_reserva }}</td>
+        </tr>
         {% endfor %}
-      </div>
-    </div>   
-{% endif %}
+      </tbody>
+    </table>
 
-<div class="col-sm-12">
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Código</th>
-      <th scope="col">Usuario</th>
-      <th scope="col">Cancha</th>
-      <th scope="col">Fecha reserva</th>
-      <th scope="col">Hora inicio</th>
-      <th scope="col">Hora fin</th>
-      <th scope="col">Valor unitario</th>
-      <th scope="col">Valor total</th>
-      <th scope="col">Estado de reserva</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for reserva in reservas %}
-    <tr>
-      <td><a href="{% url 'reserva_enlace' pk=reserva.pk %}">0000{{ reserva.id }}</a></td>
-      <td>{{ reserva.usuario }}</td>
-      <td>{{ reserva.cancha }}</td>
-      <td>{{ reserva.fecha_reserva }}</td>
-      <td>{{ reserva.hora_inicio }}</td>
-      <td>{{ reserva.hora_fin }}</td>
-      <td>{{ reserva.valor_unitario }}</td>
-      <td>{{ reserva.valor_total }}</td>
-      <td>{{ reserva.estado_reserva }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-<a href="{% url 'reserva_nueva' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Añadir nueva reserva</span></a>  
+    <a href="{% url 'reserva_nueva' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Añadir nueva
+        reserva</span></a>
+  </div>
 </div>
-
-
+</section>
 {% endblock %}
