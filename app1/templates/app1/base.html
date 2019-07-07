@@ -14,7 +14,9 @@
         <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
         <!-- Main Stylesheet File -->
         <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     </head>
     <body>
 
@@ -35,11 +37,17 @@
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
-                    	<li class="menu-has-children"><a href="/">Inicio</a></li>
-                    	{% if user.is_authenticated %}
+                    	<li><a href="/">Inicio</a></li>
+                        {% if user.is_authenticated %}
 							<li><a href="/cancha">Canchas</a></li>
-							<li><a href="/reserva">Reservas</a></li>
-							<li><a href="{% url 'logout' %}" class="button primary">Cerrar Sesión</a></li>
+                            <li><a href="/reserva">Reservas</a></li>
+                            <li><a lass="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b>{{ usuario }}</b> </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" id="editComplejo">Actualizar datos del complejo</a> <br>
+                                        <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
+                                      </div>    
+                            </li>
+							<!-- <li><a href="{% url 'logout' %}" class="button primary">Cerrar Sesión</a></li> -->
 							{% else %}
 							<li><a href="/admin">Superusuario</a></li>
 							<li><a href="{% url 'login' %}" class="button primary">Iniciar Sesión</a></li>
