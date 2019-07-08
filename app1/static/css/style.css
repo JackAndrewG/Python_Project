@@ -739,6 +739,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     background: linear-gradient(45deg, rgba(2, 4, 3, 0.3), rgba(29, 20, 25, 0.6)), url("../img/intro-bg.jpg")fixed center center;
     background-size: cover;
     padding: 150px;
+    color: white;
 }
 
 #call-to-action .cta-title {
