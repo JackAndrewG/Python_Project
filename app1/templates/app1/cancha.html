@@ -5,8 +5,6 @@
 <!-- Agregar boton de añadir -->
 {% extends 'app1/base.html' %}
 {% block content %}
-<section id="call-to-action">
-  <div class="container">
 {% if messages %}
     <div class="row">
       <div class="col-sm-12">
@@ -46,6 +44,4 @@
 
 <a href="{% url 'cancha_nueva' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Añadir nueva cancha</span></a>
 </div>
-</div>
-</section>
 {% endblock %}

@@ -1,12 +1,6 @@
 from django import forms
 
-from .models import Cancha, Reserva, Complejo
-
-class ComplejoForm(forms.ModelForm):
-
-    class Meta:
-        model = Complejo
-        fields = ('nombre_complejo', 'direccion_complejo', 'telefono_complejo')
+from .models import Cancha, Reserva
 
 class CanchaForm(forms.ModelForm):
 

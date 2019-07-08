@@ -3,28 +3,13 @@
 {% block content %}
 <section id="call-to-action">
     <div class="container">
-        <div class="col-lg-12 text-center" id="content">
+        <div class="col-lg-12 text-center">
             <h3 class="cta-title" > ¡ RESERVA ONLINE Y JUEGA YA !</h3>
-            <h3 class="cta-title">{{complejo.nombre_complejo}}</h3>
             <h4 class="cta-text"> Fácil, rápido y seguro </h4>
-            <h5 class="cta-text">{{complejo.direccion_complejo}}</h5>
-            <h6 class="cta-text">{{complejo.telefono_complejo}}</h6>
-            <input id="hidden" type="hidden" value="{{complejo.puntuacion_complejo}}">
-            <div id="stars" class="cta-text"></div>
-            <script>
-                html='';
-                stars = parseInt($('#hidden').val());
-                console.log(stars);
-                
-                for (let i = 0; i < stars; i++) {
-                    html+='<i class="fas fa-star"></i>';                
-                }
-                $('#stars').html(html);
-            </script>
             <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
         </div>
         <div class="col-lg-12">
-            <h5 class="cta-text"> </h5>
+            <h5 class="cta-text">Bienvenido {{ usuario }}</h5>
         </div>
     </div>
 </section>
@@ -50,12 +35,17 @@
                 <div class="info">
                     <div>
                         <i class="ion-ios-location-outline"></i>
-                        <p>{{complejo.direccion_complejo}} Loja-Ecuador</p>
+                        <p>Av Pio Jaramillo Alvarado y Heroes del cenepa, Loja 110101</p>
+                    </div>
+
+                    <div>
+                        <i class="ion-ios-email-outline"></i>
+                        <p>canchascalvacalva@gmail.com</p>
                     </div>
 
                     <div>
                         <i class="ion-ios-telephone-outline"></i>
-                        <p>{{complejo.telefono_complejo}}</p>
+                        <p>+1 5589 55488 55s</p>
                     </div>
 
                 </div>
@@ -73,21 +63,4 @@
 
     </div>
 </section><!-- #contact -->
-
-<script>
-    $('#editComplejo').click(function () {
-        $('#content').html('<form action="/complejo/update" method="POST" id="call-to-action">{% csrf_token %}'+
-                '<div class="input-field col s12">Nombre del Complejo Deportivo:'+
-                    '<input type="text" name="nombre_complejo" value="{{complejo.nombre_complejo}}" minlenght="3" maxlength="50" required>'+
-                '</div>'+
-                '<div class="input-field col s12">Dirección del Complejo Deportivo:'+
-                    '<input type="text" name="direccion_complejo" minlenght="10" maxlength="80" value="{{complejo.direccion_complejo}}" placeholder="sector-calle principal-calle secundaria-nro-referencia" required>'+
-                '</div>'+
-                '<div class="input-field col s12">Teléfono del Complejo Deportivo:'+
-                    '<input type="text" name="telefono_complejo" minlenght="10" maxlength="19" value="{{complejo.telefono_complejo}}" required>'+
-                '</div><br>'+
-                '<button class="btn btn-success "><i class="fas fa-done"></i>Guardar cambios</button></form>');
-        // $('#editComplejo').attr('id', '');
-    });
-</script>
 {% endblock %}

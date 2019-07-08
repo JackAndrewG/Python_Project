@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Cancha, Reserva, Complejo
-from .forms import ComplejoForm, CanchaForm, ReservaForm
+from .forms import CanchaForm, ReservaForm
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -11,24 +11,8 @@ import pytz
 import datetime
 # Create your views here.
 def inicio(request):
-    usuario = ''
-    complejo = ''
-    if(request.user.is_authenticated):
-        usuario = request.user
-        complejo = Complejo.objects.get(usuario_id=request.user.id)
-    return render(request, 'app1/inicio.html', {'usuario': usuario, 'complejo': complejo})
-
-@login_required
-def complejo_update(request):
-    complejo = get_object_or_404(Complejo, usuario=request.user)
-    form = ComplejoForm(request.POST, instance=complejo)
-    if form.is_valid():
-        complejo = form.save(commit=False)
-        complejo.save()
-        return redirect('inicio')
-    # else:
-    #     form = CanchaForm(instance=cancha)
-    # return render(request, 'app1/cancha_editar.html', {'form': form})
+	usuario = request.user
+	return render(request, 'app1/inicio.html', {'usuario': usuario})
 
 @login_required
 def cancha(request):
