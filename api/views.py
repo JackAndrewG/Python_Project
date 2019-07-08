@@ -11,6 +11,9 @@ class UserViewSet(viewsets.ModelViewSet):
         if (self.request.query_params.get('email')):
             email = self.request.query_params.get('email')
             return User.objects.filter(email=email)
+        elif (self.request.query_params.get('username')):
+            username = self.request.query_params.get('username')
+            return User.objects.filter(username=username)
         else:
             return self.queryset
 
