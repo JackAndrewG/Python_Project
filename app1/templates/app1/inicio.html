@@ -50,18 +50,11 @@
                     <div>
                         <i class="ion-ios-location-outline"></i>
                         <p>{{complejo.direccion_complejo}} Loja-Ecuador</p>
-                        <p>Av Pio Jaramillo Alvarado y Heroes del cenepa, Loja 110101</p>
-                    </div>
-
-                    <div>
-                        <i class="ion-ios-email-outline"></i>
-                        <p>canchascalvacalva@gmail.com</p>
                     </div>
 
                     <div>
                         <i class="ion-ios-telephone-outline"></i>
                         <p>{{complejo.telefono_complejo}}</p>
-                        <p>+1 5589 55488 55s</p>
                     </div>
                 </div>
             </div>
@@ -81,16 +74,16 @@
 <script>
     $('#editComplejo').click(function () {
         $('#content').html('<form action="/complejo/update" method="POST" id="call-to-action">{% csrf_token %}'+
-                '<div class="input-field col s12">Nombre del Complejo Deportivo:'+
-                    '<input type="text" name="nombre_complejo" value="{{complejo.nombre_complejo}}" minlenght="3" maxlength="50" required>'+
+                '<div class="form-group">Nombre del Complejo Deportivo:'+
+                    '<input class="form-control form-control-lg" type="text" name="nombre_complejo" value="{{complejo.nombre_complejo}}" minlenght="3" maxlength="50" required>'+
                 '</div>'+
-                '<div class="input-field col s12">Dirección del Complejo Deportivo:'+
-                    '<input type="text" name="direccion_complejo" minlenght="10" maxlength="80" value="{{complejo.direccion_complejo}}" placeholder="sector-calle principal-calle secundaria-nro-referencia" required>'+
+                '<div class="form-group">Dirección del Complejo Deportivo:'+
+                    '<input class="form-control form-control-lg" type="text" name="direccion_complejo" minlenght="10" maxlength="80" value="{{complejo.direccion_complejo}}" placeholder="sector-calle principal-calle secundaria-nro-referencia" required>'+
                 '</div>'+
-                '<div class="input-field col s12">Teléfono del Complejo Deportivo:'+
-                    '<input type="text" name="telefono_complejo" minlenght="10" maxlength="19" value="{{complejo.telefono_complejo}}" required>'+
+                '<div class="form-group">Teléfono del Complejo Deportivo:'+
+                    '<input class="form-control form-control-lg" type="text" name="telefono_complejo" minlenght="10" maxlength="19" value="{{complejo.telefono_complejo}}" required>'+
                 '</div><br>'+
-                '<button class="btn btn-success "><i class="fas fa-done"></i>Guardar cambios</button></form>');
+                '<button class="btn btn-success btn-lg"><i class="fas fa-done"></i>Guardar cambios</button></form>');
         // $('#editComplejo').attr('id', '');
     });
 </script>

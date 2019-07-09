@@ -16,9 +16,13 @@ Seleccionar una de las canchas del complejo -->
     </div>
   </div>
   {% endif %}
-
-  <div class="col-sm-12">
-    <table class="table">
+    <div>
+      <a href="{% url 'reserva_nueva' %}" class="btn btn-outline-success"><span class="glyphicon glyphicon-plus">Añadir nueva
+      reserva</span></a>
+    </div>
+    <div class="table-responsive">
+    <table class="table table-striped table-dark">
+        <caption>Lista de reservas</caption>
       <thead>
         <tr>
           <th scope="col">Código</th>
@@ -43,14 +47,18 @@ Seleccionar una de las canchas del complejo -->
           <td>{{ reserva.hora_fin }}</td>
           <td>{{ reserva.valor_unitario }}</td>
           <td>{{ reserva.valor_total }}</td>
-          <td>{{ reserva.estado_reserva }}</td>
+          <td> 
+            {% if reserva.estado_reserva %} 
+              Activa
+            {%else%}
+              Inactiva
+            {%endif%}
+          </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-
-    <a href="{% url 'reserva_nueva' %}" class="top-menu"><span class="glyphicon glyphicon-plus">Añadir nueva
-        reserva</span></a>
+    
   </div>
 </div>
 </section>

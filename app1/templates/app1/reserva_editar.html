@@ -2,64 +2,64 @@
 
 {% block content %}
 <section id="call-to-action">
-    <div class="container">
-<div class="col-sm-12">
-    <h1>{{ titulo }}</h1>
-        <form method="POST" class="post-form">
+        <h1>{{ titulo }}</h1>
+        <form method="POST">
             {% csrf_token %}
-
-            <div class="form-group">
-                <label for="id_usuario">Usuario:</label>
-                <select name="usuario" required id="usuario_id">
-                    <option value="" selected>---------</option>
-                    {% for usuario in usuarios %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="id_usuario">Usuario:</label>
+                    <select name="usuario" required id="usuario_id" class="form-control">
+                        <option value="" selected>seleccione...</option>
+                        {% for usuario in usuarios %}
                         <option value="{{ usuario.id }}">{{ usuario.username }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-                
-            <div class="form-group">
-                <label for="id_cancha">Cancha:</label> 
-                <select name="cancha" required id="id_cancha">
-                    <option value="" selected>---------</option>
-                    {% for cancha in canchas %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="id_cancha">Cancha:</label>
+                    <select name="cancha" required id="id_cancha" class="form-control">
+                        <option value="" selected>seleccione...</option>
+                        {% for cancha in canchas %}
                         <option value="{{ cancha.id }}">{{ cancha.descripcion_cancha }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+                        {% endfor %}
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="id_fecha_reserva">Fecha a reservar:</label>
-                <input name="fecha_reserva" required="" id="id_fecha_reserva" type="date" max="2019-12-31">
-            </div>
+                <div class="form-group col-md-6">
+                    <label for="id_fecha_reserva">Fecha a reservar:</label>
+                    <input name="fecha_reserva" required="" id="id_fecha_reserva" type="date" max="2019-12-31"
+                        class="form-control">
+                </div>
 
-            <div class="form-group">
-                <label for="id_hora_inicio">Hora inicio:</label>
-                <input type="time" name="hora_inicio" value="12:00" step="1800" required id="id_hora_inicio">
-                <label for="id_hora_fin">Hora fin:</label>
-                <input type="time" name="hora_fin" step="1800" required id="id_hora_fin">
-            </div>
-            
-            <div class="row">
-                <div class="col-sm-2">
+                <div class="form-group col-md-3">
+                    <label for="id_hora_inicio">Hora inicio:</label>
+                    <input type="time" name="hora_inicio" value="12:00" step="1800" required id="id_hora_inicio"
+                        class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="id_hora_fin">Hora fin:</label>
+                    <input type="time" name="hora_fin" step="1800" required id="id_hora_fin" class="form-control">
+                </div>
+                <div class="form-group col-md-2">
                     <label for="id_valor_unitario">Valor unitario:</label>
-                    <input class="form-control" type="number" name="valor_unitario" step="0.01" required id="id_valor_unitario" readonly="true">
+                    <input class="form-control" type="number" name="valor_unitario" step="0.01" required
+                        id="id_valor_unitario" readonly="true" class="form-control">
                 </div>
-                <div class="col-sm-2">
+                <div class="form-group col-md-2">
                     <label for="id_valor_total">Valor total:</label>
-                    <input class="form-control" type="number" name="valor_total" step="0.01" required id="id_valor_total" readonly="true">
+                    <input class="form-control" type="number" name="valor_total" step="0.01" required
+                        id="id_valor_total" readonly="true" class="form-control">
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="estado_reserva">Estado:</label><br>
+                    {{ form.estado_reserva }}
                 </div>
             </div>
-
-            <br>
-            <div class="form-group">
-                <label for="{{ form.estado_reserva.id_for_label }}">Estado:</label>
-                {{ form.estado_reserva }}
-            </div>
-            
-            <input class="btn btn-primary" type="submit" value="Guardar">
+            <input class="btn btn-primary btn-lg" type="submit" value="Guardar" class="form-control">
         </form>
-        </div> 
+</section>
+
         <script>
                 function calcularHoraActual(){
                     var f = new Date();
@@ -196,7 +196,5 @@
 
             
             </script>   
-    </div>
-</section>
 {% endblock %}
 
