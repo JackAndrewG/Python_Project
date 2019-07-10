@@ -42,6 +42,7 @@ def cancha_nueva(request):
             cancha = form.save(commit=False)
             id_comple = Complejo.objects.get(usuario_id=request.user.id)
             cancha.complejo = id_comple
+            cancha.foto_cancha = request.FILES.get('foto_cancha')
             cancha.fecha_creacion = timezone.now()
             cancha.save()
             messages.success(request, 'Cancha guardada con éxito !')

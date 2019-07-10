@@ -25,7 +25,7 @@ class Cancha (models.Model):
     descripcion_cancha = models.CharField(max_length=200, default='Cancha de fútbol Nro 1')
     valor_dia = models.DecimalField(max_digits=7, decimal_places=2)
     valor_noche = models.DecimalField(max_digits=7, decimal_places=2, default=0)
-    foto_cancha = models.CharField(max_length=250, null=True, blank=True)
+    foto_cancha = models.ImageField(upload_to='images', null=True, blank=True)
     estado_cancha = models.BooleanField(default = True)
 
     def Publish(self):

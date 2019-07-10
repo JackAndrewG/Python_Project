@@ -12,7 +12,7 @@ class CanchaForm(forms.ModelForm):
 
     class Meta:
         model = Cancha
-        fields = ('descripcion_cancha', 'valor_dia', 'valor_noche', 'foto_cancha',)
+        fields = ('descripcion_cancha', 'valor_dia', 'valor_noche', 'foto_cancha')
 
 class ReservaForm(forms.ModelForm):
 
