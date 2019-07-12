@@ -1,2 +1,4 @@
 *.pyc
 db.sqlite3
+media
+app1/migrations

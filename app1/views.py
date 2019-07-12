@@ -27,6 +27,7 @@ def complejo_update(request):
     form = ComplejoForm(request.POST, instance=complejo)
     if form.is_valid():
         complejo = form.save(commit=False)
+        complejo.foto_complejo = request.FILES.get('foto_complejo')
         complejo.save()
         return redirect('inicio')
 
@@ -44,6 +45,7 @@ def cancha_nueva(request):
             cancha = form.save(commit=False)
             id_comple = Complejo.objects.get(usuario_id=request.user.id)
             cancha.complejo = id_comple
+            cancha.foto_cancha = request.FILES.get('foto_cancha')
             cancha.fecha_creacion = timezone.now()
             cancha.save()
             messages.success(request, 'Cancha guardada con éxito !')
