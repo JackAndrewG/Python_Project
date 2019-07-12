@@ -6,7 +6,7 @@ class ComplejoForm(forms.ModelForm):
 
     class Meta:
         model = Complejo
-        fields = ('nombre_complejo', 'direccion_complejo', 'telefono_complejo')
+        fields = ('nombre_complejo', 'direccion_complejo', 'telefono_complejo', 'foto_complejo')
         
 class CanchaForm(forms.ModelForm):
 

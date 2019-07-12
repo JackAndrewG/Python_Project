@@ -25,6 +25,7 @@ def complejo_update(request):
     form = ComplejoForm(request.POST, instance=complejo)
     if form.is_valid():
         complejo = form.save(commit=False)
+        complejo.foto_complejo = request.FILES.get('foto_complejo')
         complejo.save()
         return redirect('inicio')
 
