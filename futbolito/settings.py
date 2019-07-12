@@ -80,6 +80,8 @@ DATABASES = {
             'NAME': 'futbolitoDB',
             'USER': 'JackAndrew',
             'PASSWORD': 'jack',
+            'USER': 'root',
+            'PASSWORD': 'albert123',
             'HOST': 'localhost',
             'PORT': '3306',
         }
@@ -124,4 +126,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'LOGIN_REDIRECT_URL = '/'

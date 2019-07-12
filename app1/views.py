@@ -16,6 +16,8 @@ def inicio(request):
     complejo = ''
     if(request.user.is_authenticated):
         usuario = request.user
+        if (usuario.is_staff == 0) or (usuario.is_superuser == 1):
+            return redirect('accounts/logout/')
         complejo = Complejo.objects.get(usuario_id=request.user.id)
     return render(request, 'app1/inicio.html', {'usuario': usuario, 'complejo': complejo})
 
