@@ -11,6 +11,9 @@ class UserViewSet(viewsets.ModelViewSet):
         if (self.request.query_params.get('email')):
             email = self.request.query_params.get('email')
             return User.objects.filter(email=email)
+        elif (self.request.query_params.get('username')):
+            username = self.request.query_params.get('username')
+            return User.objects.filter(username=username)
         else:
             return self.queryset
 
@@ -32,8 +35,9 @@ class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
     def get_queryset(self):
-        if (self.request.query_params.get('estado')):
+        if (self.request.query_params.get('usuario') and self.request.query_params.get('estado')):
+            user = self.request.query_params.get('usuario')
             estado = self.request.query_params.get('estado')
-            return Reserva.objects.filter(estado_reserva=estado)
+            return Reserva.objects.filter(usuario=user, estado_reserva=estado)
         else:
             return self.queryset
