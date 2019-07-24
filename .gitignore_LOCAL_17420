@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Django #
 *.log
 *.pot
@@ -116,9 +115,3 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 
-=======
-*.pyc
-db.sqlite3
-media
-app1/migrations
->>>>>>> feature/Pagi

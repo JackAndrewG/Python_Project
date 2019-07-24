@@ -1,28 +1,19 @@
-<!-- Nombres del usuario que reserva
-Seleccionar una de las canchas del complejo -->
 {% extends 'app1/base.html' %}
 {% block content %}
 <section id="call-to-action">
 <div class="container">
   <!-- Cambio en modelos: codigo_cancha > unico -->
-  {% if messages %}
   <div class="row">
-    <div class="col-sm-12">
-      {% for message in messages %}
-      <p {% if message.tags == "success" %} class="alert alert-success" {% else %} class="alert alert-danger"
-        {% endif %}>{{ message }}
-      </p>
-      {% endfor %}
-    </div>
+    <form method="GET" action="/reporte_reservas/"> {% csrf_token %}
+      Ingrese el mes y año:
+      <input type="month" name="buscar_mes">
+      <button type="submit" class="btn btn-info">Consultar</button>
+    </form>
   </div>
-  {% endif %}
-    <div>
-      <a href="{% url 'reserva_nueva' %}" class="btn btn-outline-success"><span class="glyphicon glyphicon-plus">Añadir nueva
-      reserva</span></a>
-    </div>
-    <div class="table-responsive">
+<br>
+  <div class="table-responsive">
     <table class="table table-striped table-dark">
-        <caption>Lista de reservas</caption>
+      <caption>Lista de reservas</caption>
       <thead>
         <tr>
           <th scope="col">Código</th>

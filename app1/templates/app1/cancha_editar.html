@@ -1,11 +1,34 @@
 {% extends 'app1/base.html' %}
 
 {% block content %}
-	<h1>Modificar cancha</h1>
-    	<form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        	<button type="submit" class="save btn btn-default">Guardar</button>
+<section id="call-to-action">
+    <div class="container">
+<div class="col-sm-12">
+	<h1>{{ titulo }}</h1>
+    	<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+			<div class="form-row">
+				<div class="form-group col-md-8">
+                    <label for="descripcion_cancha">Nombre de la Cancha:</label>
+                    {{ form.descripcion_cancha }}
+				</div>
+				<div class="form-group col-md-2">
+                    <label for="valor_dia">Valor en el día:</label>
+                    {{ form.valor_dia }}
+				</div>
+				<div class="form-group col-md-2">
+                    <label for="valor_noche">Valor en la noche:</label>
+                    {{ form.valor_noche }}
+                </div>
+				<div class="form-group col-md-5">
+                    <label for="foto_cancha">Foto:</label>
+                    {{ form.foto_cancha }}
+                </div>
+			</div>
+        	<input class="btn btn-primary" type="submit" value="Guardar">
     	</form>
+</div>
+</div>
+</section>
 {% endblock %}
 
 <!-- Crear formulario para editar campos -->
