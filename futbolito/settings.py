@@ -92,7 +92,7 @@ DATABASES = {
             'ENGINE': 'mysql_cymysql',
             'NAME': 'futbolitoDB',
             'USER': 'root',
-            'PASSWORD': 'root',
+            'PASSWORD': 'albert123',
             'HOST': 'localhost',
             'PORT': '3306',
         }
