@@ -9,19 +9,19 @@
 			<div class="form-row">
 				<div class="form-group col-md-8">
                     <label for="descripcion_cancha">Nombre de la Cancha:</label>
-                    <input class="form-control" type="text" name="descripcion_cancha" required id="descripcion_cancha">
+                    {{ form.descripcion_cancha }}
 				</div>
 				<div class="form-group col-md-2">
                     <label for="valor_dia">Valor en el día:</label>
-                    <input class="form-control" type="number" name="valor_dia" required id="valor_dia">
+                    {{ form.valor_dia }}
 				</div>
 				<div class="form-group col-md-2">
                     <label for="valor_noche">Valor en la noche:</label>
-                    <input class="form-control" type="number" name="valor_noche" required id="valor_noche">
+                    {{ form.valor_noche }}
                 </div>
 				<div class="form-group col-md-5">
                     <label for="foto_cancha">Foto:</label>
-                    <input class="form-control" type="file" name="foto_cancha" required id="foto_cancha">
+                    {{ form.foto_cancha }}
                 </div>
 			</div>
         	<input class="btn btn-primary" type="submit" value="Guardar">

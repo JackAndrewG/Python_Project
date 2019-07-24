@@ -79,8 +79,6 @@ DATABASES = {
         'default': {
             'ENGINE': 'mysql_cymysql',
             'NAME': 'futbolitoDB',
-            'USER': 'JackAndrew',
-            'PASSWORD': 'jack',
             'USER': 'root',
             'PASSWORD': 'albert123',
             'HOST': 'localhost',

@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 import pytz
 import datetime
+from django.db.models import Q
 # Create your views here.
 
 def inicio(request):
@@ -172,3 +173,20 @@ def reserva_editar(request, pk):
         canchas = list(Cancha.objects.filter(complejo_id=id_comple))
         usuarios = list(User.objects.filter(is_staff=0))
     return render(request, 'app1/reserva_modificar.html', {'titulo': 'Cancelar reserva'})
+
+@login_required
+def reporte_reservas(request):
+    id_comple = Complejo.objects.get(usuario_id=request.user.id)
+    canchas = list(Cancha.objects.filter(complejo_id=id_comple))
+    reservs = list(Reserva.objects.all())
+    reservas = []
+    for reserva in reservs:
+        for cancha in canchas:
+            if reserva.cancha_id == cancha.id:
+                reservas.append(reserva)
+    
+    consulta = request.GET.get("buscar_mes")
+    if consulta:
+        reservas = Reserva.objects.filter(
+            Q(fecha_reserva__icontains = consulta))
+    return render(request, 'app1/reporte_reservas.html', {'reservas': reservas})

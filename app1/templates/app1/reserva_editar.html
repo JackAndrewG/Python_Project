@@ -1,7 +1,7 @@
 {% extends 'app1/base.html' %}
 
 {% block content %}
-<section id="call-to-action">
+<section id="call-to-action" style="color: white">
         <h1>{{ titulo }}</h1>
         <form method="POST">
             {% csrf_token %}
@@ -68,13 +68,13 @@
                     var dd = f.getDate();
                     var hh = f.getHours();
                     var min = f.getMinutes();
-                    var ss = f.getSeconds(); 
+                    var ss = f.getSeconds();
                     if(dd<10) {
                         dd='0'+dd
-                    } 
+                    }
                     if(mm<10) {
                         mm='0'+mm
-                    } 
+                    }
                     f = yyyy+'-'+mm+'-'+dd;
                     $("#id_fecha_reserva").attr("min", f);
                     var fecha_ing = $("#id_fecha_reserva").val();
@@ -85,13 +85,25 @@
                             hh = hh+1
                             h = hh+':'+'00';
                         }
-                        $("#id_hora_inicio").attr("value", h);
-                        $("#id_hora_inicio").attr("min", h);
+                        if(hh<10){
+                          h = '0'+h;
+                        }
+                        hh = h.substr(0, 2);
+                        var hora_ap = "{{ complejo.hora_apertura }}";
+                        hora_ap = hora_ap.substr(0, 2);
+                        hora_ap = parseFloat(hora_ap);
+                        if( hh < hora_ap ) {
+                            $("#id_hora_inicio").attr("value", "{{ complejo.hora_apertura }}");
+                            $("#id_hora_inicio").attr("min", "{{ complejo.hora_apertura }}");
+                        } else {
+                            $("#id_hora_inicio").attr("value", h);
+                            $("#id_hora_inicio").attr("min", h);
+                        }
                     } else {
                         $("#id_hora_inicio").attr("value", "{{ complejo.hora_apertura }}");
-                        $("#id_hora_inicio").attr("min", "{{ complejo.hora_apertura }}"/*Hora de apertura del complejo*/);
+                        $("#id_hora_inicio").attr("min", "{{ complejo.hora_apertura }}");
                     }
-                    
+
                 }
                 function cambiarHoraFin(){
                     var h_fin = $("#id_hora_inicio").val();
@@ -117,8 +129,8 @@
                             v_unitario = {{ cancha.valor_dia }}
                             if (hora_fin >= '19:00') {
                                 v_unitario = {{ cancha.valor_noche }}
-                            } 
-                        } 
+                            }
+                        }
                         if (v_unitario == 0){
                             v_unitario = {{ cancha.valor_dia }}
                         }
@@ -156,7 +168,7 @@
                 }
 
 
-            $(document).ready(function(){   
+            $(document).ready(function(){
                 calcularHoraActual();
                 cambiarHoraFin();
             });
@@ -186,7 +198,7 @@
                 determinarValorUnitario();
             });
 
-         
+
             $("#id_cancha").keyup(function () {
                 determinarValorUnitario();
             });
@@ -194,7 +206,6 @@
                 determinarValorUnitario();
             });
 
-            
-            </script>   
-{% endblock %}
 
+            </script>
+{% endblock %}

@@ -489,11 +489,11 @@ body.mobile-nav-active #mobile-nav-toggle {
     font-weight: 400;
 }
 .section-center-padre{
-    width: 100%; 
+    width: 100%;
     text-align: center;
 }
 .section-center-hijo{
-    margin: 0 auto;    
+    margin: 0 auto;
     width: 50%;
     display: inline-block;
 }
