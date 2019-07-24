@@ -25,7 +25,7 @@ SECRET_KEY = 'b*jsfdvm28xj4qp4#b43%cuj$m5jstnmq3h&$c%6co!&#a^!*4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '10.20.8.64', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '10.20.55.140', '192.168.1.12']
 
 
 # Application definition
@@ -90,8 +90,8 @@ DATABASES = {
         'default': {
             'ENGINE': 'mysql_cymysql',
             'NAME': 'futbolitoDB',
-            'USER': 'root',
-            'PASSWORD': 'root',
+            'USER': 'AdminFutbolito',
+            'PASSWORD': 'futbolito',
             'HOST': 'localhost',
             'PORT': '3306',
         }

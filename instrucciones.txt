@@ -17,8 +17,15 @@ DATABASES = {
 python manage.py makemigrations app1
 python manage.py migrate app1
 
-CREATE USER 'AdminFutbolito'@'localhost' IDENTIFIED BY 'futbolito';
-GRANT ALL PRIVILEGES ON * . * TO 'AdminFutbolito'@'localhost';
+
+//CREAR UN UNICO USUARIO mYSQL
+//crear desde la consolo mysql
+//SI SE REQUIRE*
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';	
+
+CREATE USER AdminFutbolito@localhost IDENTIFIED WITH mysql_native_password BY 'futbolito';	
+GRANT ALL PRIVILEGES ON * . * TO AdminFutbolito@localhost;
+
 
 Recomendaciones:
 Asignar complejo_id a la tabla cancha seleccionando el id de la tabla complejo donde usuario_id sea igual a req.user.id (id logueado)
