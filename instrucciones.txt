@@ -14,8 +14,12 @@ DATABASES = {
         }
     }
 
-python manage.py makemigrations app1
+python manage.py migrate (Realiza la creación del sitio admin, tablas, auth_users, etc.)
 python manage.py migrate app1
+python manage.py makemigrations app1
+
+Crear superusuario por consola:
+python manage.py createsuperuser
 
 
 //CREAR UN UNICO USUARIO mYSQL

@@ -63,6 +63,7 @@ def cancha_editar(request, pk):
         if form.is_valid():
             cancha = form.save(commit=False)
             cancha.fecha_creacion = timezone.now()
+            cancha.foto_cancha = request.FILES.get('foto_cancha')
             cancha.save()
             messages.success(request, 'Cancha modificada con éxito !')
             return redirect('cancha')
