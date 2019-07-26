@@ -489,11 +489,11 @@ body.mobile-nav-active #mobile-nav-toggle {
     font-weight: 400;
 }
 .section-center-padre{
-    width: 100%; 
+    width: 100%;
     text-align: center;
 }
 .section-center-hijo{
-    margin: 0 auto;    
+    margin: 0 auto;
     width: 50%;
     display: inline-block;
 }
@@ -738,7 +738,8 @@ body.mobile-nav-active #mobile-nav-toggle {
     overflow: hidden;
     background: linear-gradient(45deg, rgba(2, 4, 3, 0.3), rgba(29, 20, 25, 0.6)), url("../img/intro-bg.jpg")fixed center center;
     background-size: cover;
-    padding: 150px;
+    padding: 50px;
+    color: white;
 }
 
 #call-to-action .cta-title {

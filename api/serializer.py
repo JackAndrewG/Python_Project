@@ -11,12 +11,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class ComplejoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Complejo
-        fields = ('nombre_complejo', 'direccion_complejo', 'telefono_complejo', 'puntuacion_complejo', 'id')
+        fields = ('nombre_complejo', 'direccion_complejo', 'telefono_complejo', 'puntuacion_complejo', 'id', 'foto_complejo')
 
 class CanchaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Cancha
-        fields = ('id', 'descripcion_cancha', 'valor_dia', 'valor_noche', 'estado_cancha', 'complejo')
+        fields = ('id', 'descripcion_cancha', 'valor_dia', 'valor_noche', 'estado_cancha', 'complejo', 'foto_cancha')
 
 class ReservaSerializer(serializers.ModelSerializer):
     class Meta:

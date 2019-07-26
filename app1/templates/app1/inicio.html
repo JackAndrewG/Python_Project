@@ -1,15 +1,31 @@
 {% extends 'app1/base.html' %}
 {% load static %}
 {% block content %}
-<section id="call-to-action">
+<section id="call-to-action" style="padding-top: 205px; padding-bottom: 250px">
     <div class="container">
-        <div class="col-lg-12 text-center">
-            <h3 class="cta-title" >RESERVA ONLINE EL TURNO QUE ESTAS BUSCANDO</h3>
-            <h5 class="cta-text">Fácil, rápido y seguro </h5>
-            <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
-            <!--  Card -->
-        <!--  Fin Card -->
+        <div class="col-lg-12 text-center" id="content">
+            <div class="col-lg-12 text-center">
+                <h3 class="cta-title" > ¡ RESERVA ONLINE Y JUEGA YA !</h3>
+                <h3 class="cta-title">{{complejo.nombre_complejo}}</h3>
+                <h4 class="cta-text"> Fácil, rápido y seguro </h4>
+                <h5 class="cta-text">{{complejo.direccion_complejo}}</h5>
+                <h6 class="cta-text">{{complejo.telefono_complejo}}</h6>
+                <input id="hidden" type="hidden" value="{{complejo.puntuacion_complejo}}">
+                <div id="stars" class="cta-text"></div>
+                <script>
+                    html='';
+                    stars = parseInt($('#hidden').val());
+                    console.log(stars);
+                    
+                    for (let i = 0; i < stars; i++) {
+                        html+='<i class="fas fa-star"></i>';                
+                    }
+                    $('#stars').html(html);
+                </script>
+                <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+            </div>
     </div>
+</div>
 </section>
 
 
@@ -33,19 +49,13 @@
                 <div class="info">
                     <div>
                         <i class="ion-ios-location-outline"></i>
-                        <p>Av Pio Jaramillo Alvarado y Heroes del cenepa, Loja 110101</p>
-                    </div>
-
-                    <div>
-                        <i class="ion-ios-email-outline"></i>
-                        <p>canchascalvacalva@gmail.com</p>
+                        <p>{{complejo.direccion_complejo}} Loja-Ecuador</p>
                     </div>
 
                     <div>
                         <i class="ion-ios-telephone-outline"></i>
-                        <p>+1 5589 55488 55s</p>
+                        <p>{{complejo.telefono_complejo}}</p>
                     </div>
-
                 </div>
             </div>
 
@@ -61,4 +71,24 @@
 
     </div>
 </section><!-- #contact -->
+<script>
+    $('#editComplejo').click(function () {
+        $('#content').html('<form action="/complejo/update" method="POST" id="call-to-action">{% csrf_token %}'+
+                '<div class="form-group">Nombre del Complejo Deportivo:'+
+                    '<input class="form-control form-control-lg" type="text" name="nombre_complejo" value="{{complejo.nombre_complejo}}" minlenght="3" maxlength="50" required>'+
+                '</div>'+
+                '<div class="form-group">Dirección del Complejo Deportivo:'+
+                    '<input class="form-control form-control-lg" type="text" name="direccion_complejo" minlenght="10" maxlength="80" value="{{complejo.direccion_complejo}}" placeholder="sector-calle principal-calle secundaria-nro-referencia" required>'+
+                '</div>'+
+                '<div class="form-group">Teléfono del Complejo Deportivo:'+
+                    '<input class="form-control form-control-lg" type="text" name="telefono_complejo" minlenght="10" maxlength="19" value="{{complejo.telefono_complejo}}" required>'+
+                '</div><br>'+
+                '<div class="form-group col-md-5">'+
+                    '<label for="foto_complejo">Foto:</label>'+
+                    '<input class="form-control" type="file" name="foto_complejo" id="foto_complejo">'+
+                '</div>'+
+                '<button class="btn btn-success btn-lg"><i class="fas fa-done"></i>Guardar cambios</button></form>');
+        // $('#editComplejo').attr('id', '');
+    });
+</script>
 {% endblock %}
