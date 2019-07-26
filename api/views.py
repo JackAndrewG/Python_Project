@@ -1,7 +1,7 @@
 from rest_framework import viewsets
-from api.serializer import UserSerializer, ComplejoSerializer, CanchaSerializer, ReservaSerializer
+from api.serializer import UserSerializer, ComplejoSerializer, CanchaSerializer, ReservaSerializer, SuscripcionSerializer
 from django.contrib.auth.models import User
-from app1.models import Complejo, Cancha, Reserva
+from app1.models import Complejo, Cancha, Reserva, Suscripcion
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
@@ -39,5 +39,15 @@ class ReservaViewSet(viewsets.ModelViewSet):
             user = self.request.query_params.get('usuario')
             estado = self.request.query_params.get('estado')
             return Reserva.objects.filter(usuario=user, estado_reserva=estado)
+        else:
+            return self.queryset
+
+class SuscripcionViewSet(viewsets.ModelViewSet):
+    queryset = Suscripcion.objects.all()
+    serializer_class = SuscripcionSerializer
+    def get_queryset(self):
+        if (self.request.query_params.get('usuario')):
+            user = self.request.query_params.get('usuario')
+            return Suscripcion.objects.filter(usuario=user)
         else:
             return self.queryset

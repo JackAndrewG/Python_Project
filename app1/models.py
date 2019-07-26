@@ -54,4 +54,17 @@ class Reserva (models.Model):
         return self.Publish()
 
 
-#probando atom !
+class Suscripcion (models.Model):
+    usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    complejo = models.ForeignKey('Complejo', on_delete=models.CASCADE)
+    comentario = models.TextField(max_length=354, null=True)
+    puntuacion_usuario = models.IntegerField(default='5')
+    fecha_creacion = models.DateTimeField(auto_now = True)
+    suscripcion = models.BooleanField(default=False, null=True)
+
+    def Publish(self):
+        cadena = "{0}, {1}, {2}"
+        return cadena.format(self.usuario, self.puntuacion_usuario, self.comentario )
+
+    def __str__(self):
+        return self.Publish()
