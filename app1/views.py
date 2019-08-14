@@ -32,9 +32,6 @@ def complejo_update(request):
         form = ComplejoForm(request.POST, request.FILES, instance=complejo)
         if form.is_valid():
             complejo = form.save(commit=False)
-            print (request.FILES.get('nombre_complejo'))
-            print (request.FILES.get('foto_complejo'))
-            complejo.foto_complejo = request.FILES.get('foto_complejo')
             complejo.save()
             return redirect('inicio')
     else:
@@ -73,7 +70,7 @@ def cancha_editar(request, pk):
         if form.is_valid():
             cancha = form.save(commit=False)
             cancha.fecha_creacion = timezone.now()
-            cancha.foto_cancha = request.FILES.get('foto_cancha')
+            #cancha.foto_cancha = request.FILES.get('foto_cancha')
             cancha.save()
             messages.success(request, 'Cancha modificada con éxito !')
             return redirect('cancha')

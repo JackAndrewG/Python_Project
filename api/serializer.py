@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from app1.models import Complejo, Cancha, Reserva, Suscripcion
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -11,7 +11,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class ComplejoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Complejo
-        fields = ('nombre_complejo', 'direccion_complejo', 'telefono_complejo', 'puntuacion_complejo', 'id', 'foto_complejo')
+        fields = ('nombre_complejo', 'direccion_complejo', 'telefono_complejo', 'puntuacion_complejo', 'id', 'foto_complejo', 'coordenadas_complejo')
 
 class CanchaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
