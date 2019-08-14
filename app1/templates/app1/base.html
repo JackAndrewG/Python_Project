@@ -44,11 +44,12 @@
                     {% if user.is_authenticated %}
                     <li><a href="/cancha">Canchas</a></li>
                     <li><a href="/reserva">Reservas</a></li>
+                    <li><a href="{% url 'reporte_reservas' %}">Reporte de reservas</a></li>
                     <li><a lass="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b>{{ usuario }}</b> </a>
                         <div class="dropdown-menu" style="background: darkcyan; color: black"
                             aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" id="editComplejo" href="#">Actualizar datos del complejo</a> <br>
+                            <a class="dropdown-item" id="editComplejo" href="{% url 'complejo_update' %}">Actualizar datos del complejo</a> <br>
                             <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
                         </div>
                     </li>

@@ -1,0 +1,52 @@
+{% extends 'app1/base.html' %}
+
+{% block content %}
+<section id="call-to-action">
+    <div class="container">
+
+	<h1>{{ titulo }}</h1>
+    	<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+			<div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="nombre_complejo">Nombre:</label>
+                    {{ form.nombre_complejo }}
+				</div>
+            </div>
+            <div class="form-row">
+				<div class="form-group col-md-5">
+                    <label for="direccion_complejo">Dirección:</label>
+                    {{ form.direccion_complejo }}
+				</div>
+            </div>
+             <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="valor_noche">Teléfono:</label>
+                    {{ form.telefono_complejo }}
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="coordenadas_complejo">Coordenadas:</label>
+                    {{ form.coordenadas_complejo }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="hora_apertura">Hora apertura:</label>
+                    {{ form.hora_apertura }}
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="hora_cierre">Hora cierre:</label>
+                    {{ form.hora_cierre }}
+                </div>
+            </div>
+            <div class="form-row">
+				<div class="form-group col-md-5">
+                    <label for="foto_cancha">Foto:</label>
+                    {{ form.foto_complejo }}
+                </div>
+             </div>
+        	<input class="btn btn-primary" type="submit" value="Guardar">
+
+    	</form>
+</div>
+</section>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Cancha, Reserva, Complejo
+from .models import Cancha, Reserva, Complejo, Suscripcion
 from .forms import ComplejoForm, CanchaForm, ReservaForm
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -15,33 +15,43 @@ from django.db.models import Q
 def inicio(request):
     usuario = ''
     complejo = ''
+    comentarios = ''
+    autores = ''
     if(request.user.is_authenticated):
         usuario = request.user
         if (usuario.is_staff == 0) or (usuario.is_superuser == 1):
             return redirect('accounts/logout/')
         complejo = Complejo.objects.get(usuario_id=request.user.id)
-    return render(request, 'app1/inicio.html', {'usuario': usuario, 'complejo': complejo})
+        comentarios = list(Suscripcion.objects.filter(complejo_id=complejo))
+    return render(request, 'app1/inicio.html', {'usuario': usuario, 'complejo': complejo, 'comentarios': comentarios, 'autores': autores})
 
 @login_required
 def complejo_update(request):
-    complejo = get_object_or_404(Complejo, usuario=request.user)
-    form = ComplejoForm(request.POST, instance=complejo)
-    if form.is_valid():
-        complejo = form.save(commit=False)
-        complejo.foto_complejo = request.FILES.get('foto_complejo')
-        complejo.save()
-        return redirect('inicio')
+    complejo = Complejo.objects.get(usuario_id=request.user.id)
+    if request.method == "POST":
+        form = ComplejoForm(request.POST, request.FILES, instance=complejo)
+        if form.is_valid():
+            complejo = form.save(commit=False)
+            print (request.FILES.get('nombre_complejo'))
+            print (request.FILES.get('foto_complejo'))
+            complejo.foto_complejo = request.FILES.get('foto_complejo')
+            complejo.save()
+            return redirect('inicio')
+    else:
+        form = ComplejoForm(instance=complejo)
+    return render(request, 'app1/complejo_editar.html', {'titulo': 'Editar información del Complejo', 'form': form})
+
 
 @login_required
 def cancha(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id)
     canchas = list(Cancha.objects.filter(complejo_id=id_comple))
-    return render(request, 'app1/cancha.html', {'canchas': canchas})
+    return render(request, 'app1/cancha.html', {'titulo': 'Listado de canchas', 'canchas': canchas})
 
 @login_required
 def cancha_nueva(request):
     if request.method == "POST":
-        form = CanchaForm(request.POST)
+        form = CanchaForm(request.POST, request.FILES)
         if form.is_valid():
             cancha = form.save(commit=False)
             id_comple = Complejo.objects.get(usuario_id=request.user.id)
@@ -59,7 +69,7 @@ def cancha_nueva(request):
 def cancha_editar(request, pk):
     cancha = get_object_or_404(Cancha, pk=pk)
     if request.method == "POST":
-        form = CanchaForm(request.POST, instance=cancha)
+        form = CanchaForm(request.POST, request.FILES, instance=cancha)
         if form.is_valid():
             cancha = form.save(commit=False)
             cancha.fecha_creacion = timezone.now()
@@ -68,6 +78,16 @@ def cancha_editar(request, pk):
             messages.success(request, 'Cancha modificada con éxito !')
             return redirect('cancha')
     else:
+        print ("metodo get")
+        id_comple = Complejo.objects.get(usuario_id=request.user.id)
+        canchas = list(Cancha.objects.filter(complejo_id=id_comple))
+        cancha_encontrada = False
+        for cancha_act in canchas:
+            if cancha == cancha_act:
+                cancha_encontrada = True
+        if cancha_encontrada == False:
+            messages.error(request, '¡ No tiene acceso a ese enlace !')
+            return redirect('cancha') 
         form = CanchaForm(instance=cancha)
     return render(request, 'app1/cancha_editar.html', {'titulo': 'Editar cancha', 'form': form})
 
@@ -93,7 +113,7 @@ def reserva(request):
             Reserva.objects.filter(id=reserva_act.id).update(estado_reserva=0)
         else:
             actualizacionReservas.append(reserva_act)
-    return render(request, 'app1/reserva.html', {'reservas': actualizacionReservas})
+    return render(request, 'app1/reserva.html', {'titulo': 'Listado de reservas activas','reservas': actualizacionReservas})
 
 @login_required
 def reserva_nueva(request):
@@ -158,36 +178,50 @@ def reserva_nueva(request):
                 return redirect('reserva')
     else:
         id_comple = Complejo.objects.get(usuario_id=request.user.id)
-        canchas = list(Cancha.objects.filter(complejo_id=id_comple))
+        canchas = list(Cancha.objects.filter(complejo_id=id_comple, estado_cancha=1))
         usuarios = list(User.objects.filter(is_staff=0))
         form = ReservaForm()
     return render(request, 'app1/reserva_editar.html', {'titulo': 'Agregar reserva', 'form': form, 'canchas': canchas, 'usuarios': usuarios, 'complejo': id_comple})
 
 @login_required
 def reserva_editar(request, pk):
+    reserva = get_object_or_404(Reserva, pk=pk)
     if request.method == "POST":
-        Reserva.objects.filter(id=pk).update(estado_reserva=0)
-        messages.success(request, 'Reserva cancelada !')
+        Reserva.objects.filter(id=pk).delete()
+        messages.success(request, '¡ Reserva cancelada !')
         return redirect('reserva')
     else:
+        print ("metodo get")
         id_comple = Complejo.objects.get(usuario_id=request.user.id)
         canchas = list(Cancha.objects.filter(complejo_id=id_comple))
-        usuarios = list(User.objects.filter(is_staff=0))
+        reserva_encontrada = False
+        for cancha in canchas:
+            if reserva.cancha == cancha:
+                reserva_encontrada = True
+        if reserva_encontrada == False or reserva.estado_reserva == False:
+            messages.error(request, '¡ No tiene acceso a ese enlace !')
+            return redirect('reserva') 
     return render(request, 'app1/reserva_modificar.html', {'titulo': 'Cancelar reserva'})
 
 @login_required
 def reporte_reservas(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id)
     canchas = list(Cancha.objects.filter(complejo_id=id_comple))
-    reservs = list(Reserva.objects.all())
-    reservas = []
-    for reserva in reservs:
-        for cancha in canchas:
-            if reserva.cancha_id == cancha.id:
-                reservas.append(reserva)
-
-    consulta = request.GET.get("buscar_mes")
-    if consulta:
-        reservas = Reserva.objects.filter(
-            Q(fecha_reserva__icontains = consulta))
-    return render(request, 'app1/reporte_reservas.html', {'reservas': reservas})
+    reservas = Reserva.objects.filter(cancha_id__in=canchas)
+    
+    consulta_mes = request.GET.get("buscar_mes")
+    consulta_desde = request.GET.get("buscar_desde")
+    consulta_hasta = request.GET.get("buscar_hasta")
+    if consulta_mes:
+        reservas = Reserva.objects.filter(Q(fecha_reserva__icontains = consulta_mes), cancha_id__in=canchas)
+    elif consulta_desde or consulta_hasta:
+        if (consulta_desde == "") or (consulta_hasta == ""):
+            messages.error(request, 'Si desea buscar por rango de fechas debe llenar ambos campos (desde - hasta)')
+            return redirect('reporte_reservas') 
+        else:
+            reservas = Reserva.objects.filter(Q(fecha_reserva__range=[consulta_desde, consulta_hasta]), cancha_id__in=canchas)
+    nro_reservas = reservas.count()
+    total_ingresos = 0
+    for reserva in reservas:
+        total_ingresos = total_ingresos + reserva.valor_total
+    return render(request, 'app1/reporte_reservas.html', {'reservas': reservas, 'nro_reservas': nro_reservas, 'total_ingresos': total_ingresos})

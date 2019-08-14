@@ -46,8 +46,8 @@ class SuscripcionViewSet(viewsets.ModelViewSet):
     queryset = Suscripcion.objects.all()
     serializer_class = SuscripcionSerializer
     def get_queryset(self):
-        if (self.request.query_params.get('usuario')):
-            user = self.request.query_params.get('usuario')
-            return Suscripcion.objects.filter(usuario=user)
+        if (self.request.query_params.get('complejo')):
+            complejo = self.request.query_params.get('complejo')
+            return Suscripcion.objects.filter(complejo=complejo)
         else:
             return self.queryset

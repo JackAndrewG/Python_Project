@@ -1,4 +1,5 @@
 from django.db import models
+from .validators import valid_extension
 # Create your models here.
 
 class Complejo (models.Model):
@@ -7,7 +8,7 @@ class Complejo (models.Model):
     direccion_complejo = models.TextField(max_length=200, default='sector-calle principal-calle secundaria-nro-referencia')
     telefono_complejo = models.CharField(max_length=19, default='(+593) 098-234-1334')
     puntuacion_complejo = models.IntegerField(default='5')
-    foto_complejo = models.ImageField(upload_to='images/complejos_images', null=True, blank=True)
+    foto_complejo = models.ImageField(upload_to='images/complejos_images', null=True, blank=True, validators=[valid_extension])
     coordenadas_complejo = models.CharField(max_length=250, null=True, blank=True)
     hora_apertura = models.TimeField(default='09:00')
     hora_cierre = models.TimeField(default='23:00')
@@ -25,7 +26,7 @@ class Cancha (models.Model):
     descripcion_cancha = models.CharField(max_length=200, default='Cancha de fútbol Nro 1')
     valor_dia = models.DecimalField(max_digits=7, decimal_places=2)
     valor_noche = models.DecimalField(max_digits=7, decimal_places=2, default=0)
-    foto_cancha = models.ImageField(upload_to='images/canchas_images', null=True, blank=True)
+    foto_cancha = models.ImageField(upload_to='images/canchas_images', null=True, blank=True, validators=[valid_extension])
     estado_cancha = models.BooleanField(default = True)
 
     def Publish(self):

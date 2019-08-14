@@ -1,7 +1,3 @@
-<!-- HACER PLANTILLA BLOQUE -->
-
-<!-- Fijarse en las canchas de admin -->
-<!-- Agregar boton de añadir -->
 {% extends 'app1/base.html' %}
 {% block content %}
 <section id="call-to-action">
@@ -17,12 +13,12 @@
     </div>
     {% endif %}
     <div>
-      <a href="{% url 'cancha_nueva' %}" class="btn btn-outline-success"><span class="glyphicon glyphicon-plus">Añadir
-          nueva cancha</span></a>
+      <h1>{{ titulo }}</h1>
+      <a href="{% url 'cancha_nueva' %}" class="btn btn-primary"><span class="glyphicon glyphicon-plus">Añadir nueva cancha</span></a>
     </div>
   <div class="table-responsive">
       <table class="table table-striped table-dark">
-        <caption>Lista de canchas</caption>
+        <!-- <caption style="color: #f8f9fa"></caption> -->
         <thead>
           <tr>
             <th scope="col">Código</th>
@@ -35,7 +31,7 @@
           {% for cancha in canchas %}
           <tr>
             <td>0000{{ cancha.id }}</td>
-            <td><a href="{% url 'cancha_enlace' pk=cancha.pk %}">{{ cancha.descripcion_cancha }}</a></td>
+            <td><a title="Modificar cancha" href="{% url 'cancha_enlace' pk=cancha.pk %}">{{ cancha.descripcion_cancha }}</a></td>
             <td>{{ cancha.valor_dia }}</td>
             <td>{{ cancha.valor_noche }}</td>
           </tr>
