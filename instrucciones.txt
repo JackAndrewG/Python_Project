@@ -44,4 +44,4 @@ pip install djangorestframework
 
 Correr a traves de Ip:
 Poner ip de pc en settings
-python manage.py runserver 0.0.0.0:80
+python manage.py runserver 0.0.0.0:8000

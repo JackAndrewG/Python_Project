@@ -27,7 +27,7 @@ class CanchaViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if (self.request.query_params.get('complejo')):
             complejo_ID = self.request.query_params.get('complejo')
-            return Cancha.objects.filter(complejo=complejo_ID)
+            return Cancha.objects.filter(complejo=complejo_ID, estado_cancha=1)
         else:
             return self.queryset
 
