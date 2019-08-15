@@ -49,5 +49,9 @@ class SuscripcionViewSet(viewsets.ModelViewSet):
         if (self.request.query_params.get('complejo')):
             complejo = self.request.query_params.get('complejo')
             return Suscripcion.objects.filter(complejo=complejo)
+        elif (self.request.query_params.get('usuario') and self.request.query_params.get('complejo_id')):
+            user = self.request.query_params.get('usuario')
+            complejo = self.request.query_params.get('complejo_id')
+            return Suscripcion.objects.filter(usuario=user, complejo=complejo)
         else:
-            return self.queryset
+            return self.queryset    
