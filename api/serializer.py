@@ -23,7 +23,7 @@ class ReservaSerializer(serializers.ModelSerializer):
         model = Reserva
         fields = ('usuario', 'cancha', 'fecha_reserva', 'hora_inicio', 'hora_fin', 'valor_unitario', 'valor_total', 'fecha_creacion', 'estado_reserva')
 
-class SuscripcionSerializer(serializers.HyperlinkedModelSerializer):
+class SuscripcionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Suscripcion
         fields = ('usuario', 'complejo', 'comentario', 'puntuacion_usuario', 'fecha_creacion', 'suscripcion')
