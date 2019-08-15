@@ -26,4 +26,4 @@ class ReservaSerializer(serializers.ModelSerializer):
 class SuscripcionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Suscripcion
-        fields = ('usuario', 'complejo', 'comentario', 'puntuacion_usuario', 'fecha_creacion', 'suscripcion')
+        fields = ('id','usuario', 'complejo', 'comentario', 'puntuacion_usuario', 'fecha_creacion', 'suscripcion')
