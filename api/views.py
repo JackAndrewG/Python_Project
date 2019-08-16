@@ -39,6 +39,10 @@ class ReservaViewSet(viewsets.ModelViewSet):
             user = self.request.query_params.get('usuario')
             estado = self.request.query_params.get('estado')
             return Reserva.objects.filter(usuario=user, estado_reserva=estado)
+        elif (self.request.query_params.get('cancha') and self.request.query_params.get('fecha')):
+            cancha = self.request.query_params.get('cancha')
+            fecha = self.request.query_params.get('fecha')
+            return Reserva.objects.filter(cancha=cancha, fecha_reserva=fecha, estado_reserva=1)
         else:
             return self.queryset
 
