@@ -156,12 +156,18 @@
 
                     var nro_horas = hh_fin - hh_inicio;
                     var nro_minutos = min_fin - min_inicio;
+                    var valor_min = 0;
 
                     if (nro_minutos == 0) {
                         valor_total = valor_unitario * nro_horas;
                     } else {
-                        var valor_min = valor_unitario * 0.5;
-                        valor_total = (valor_unitario * nro_horas) + valor_min;
+                        if (nro_minutos == -30) {
+                            valor_min = valor_unitario * 0.5;
+                            valor_total = (valor_unitario * (nro_horas-1)) + valor_min;
+                        } else {
+                            valor_min = valor_unitario * 0.5;
+                            valor_total = (valor_unitario * nro_horas) + valor_min;
+                        }
                     }
                     $("#id_valor_total").val(valor_total);
                 }

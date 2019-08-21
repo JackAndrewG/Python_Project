@@ -14,7 +14,7 @@
     {% endif %}
     <div>
       <h1>{{ titulo }}</h1>
-      <a href="{% url 'cancha_nueva' %}" class="btn btn-primary"><span class="glyphicon glyphicon-plus">Añadir nueva cancha</span></a>
+      <a href="{% url 'cancha_nueva' %}" class="btn btn-primary"><span class="glyphicon glyphicon-plus">AÑADIR NUEVA CANCHA</span></a>
     </div>
   <div class="table-responsive">
       <table class="table table-striped table-dark">
@@ -25,6 +25,8 @@
             <th scope="col">Decripción</th>
             <th scope="col">Valor de día</th>
             <th scope="col">Valor de noche</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -34,6 +36,14 @@
             <td><a title="Modificar cancha" href="{% url 'cancha_enlace' pk=cancha.pk %}">{{ cancha.descripcion_cancha }}</a></td>
             <td>{{ cancha.valor_dia }}</td>
             <td>{{ cancha.valor_noche }}</td>
+            <td> 
+            {% if cancha.estado_cancha %} 
+              Activa
+            {%else%}
+              Inactiva
+            {%endif%}
+          </td>
+            <td><a href="{% url 'cancha_enlace' pk=cancha.pk %}" class="btn btn-secondary">MODIFICAR</td>
           </tr>
           {% endfor %}
         </tbody>

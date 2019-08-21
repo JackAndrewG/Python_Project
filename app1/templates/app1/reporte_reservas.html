@@ -1,7 +1,7 @@
 {% extends 'app1/base.html' %}
 {% block content %}
 <section id="call-to-action">
-<div class="container">
+
   <!-- Cambio en modelos: codigo_cancha > unico -->
   {% if messages %}
     <div class="row">
@@ -52,7 +52,6 @@
 <br>
   <div class="table-responsive">
     <table class="table table-striped table-dark">
-      <caption style="color: #f8f9fa">Lista de reservas</caption>
       <thead>
         <tr>
           <th scope="col">Código</th>
@@ -69,7 +68,7 @@
       <tbody>
         {% for reserva in reservas %}
         <tr>
-          <td><a href="{% url 'reserva_enlace' pk=reserva.pk %}">0000{{ reserva.id }}</a></td>
+          <td><a title="Cancelar reserva" href="{% url 'reserva_enlace' pk=reserva.pk %}">0000{{ reserva.id }}</a></td>
           <td>{{ reserva.usuario }}</td>
           <td>{{ reserva.cancha }}</td>
           <td>{{ reserva.fecha_reserva }}</td>
@@ -91,6 +90,37 @@
     
   </div>
   
+<div class="row">
+  <div class="col-md-5">
+  
+      {% if reservas.has_previous %}
+        <div class="clearfix"> 
+          <a href="?page={{ reservas.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" class="btn btn-primary float-left">Anterior</a>
+        </div>
+      {% endif %}
+   
+  </div>
+  <div class="col-md-3">
+    <nav class="pagination is-centered">
+      <ul class="pagination-list">
+        <span class="pagination-link">
+          Página {{ reservas.number }} de {{ reservas.paginator.num_pages }}
+        </span>
+        
+        
+      </ul>
+    </nav>
+  </div>
+  <div class="col-md-4">
+      {% if reservas.has_next %}
+        <div class="clearfix"> 
+          <a href="?page={{ reservas.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" class="btn btn-primary float-right">Siguiente</a>
+        </div>
+      {% endif %}
+    
+  </div>
 </div>
+
+
 </section>
 {% endblock %}

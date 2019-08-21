@@ -10,8 +10,10 @@ from django.http import HttpResponse
 import pytz
 import datetime
 from django.db.models import Q
+from django.core.paginator import Paginator
 # Create your views here.
 
+#Inicio para realizar login e inicio logueado
 def inicio(request):
     usuario = ''
     complejo = ''
@@ -25,6 +27,7 @@ def inicio(request):
         comentarios = list(Suscripcion.objects.filter(complejo_id=complejo))
     return render(request, 'app1/inicio.html', {'usuario': usuario, 'complejo': complejo, 'comentarios': comentarios, 'autores': autores})
 
+#Formulario para actualizar la información del Complejo
 @login_required
 def complejo_update(request):
     complejo = Complejo.objects.get(usuario_id=request.user.id)
@@ -38,13 +41,14 @@ def complejo_update(request):
         form = ComplejoForm(instance=complejo)
     return render(request, 'app1/complejo_editar.html', {'titulo': 'Editar información del Complejo', 'form': form})
 
-
+#Listado de canchas del complejo
 @login_required
 def cancha(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id)
     canchas = list(Cancha.objects.filter(complejo_id=id_comple))
     return render(request, 'app1/cancha.html', {'titulo': 'Listado de canchas', 'canchas': canchas})
 
+#Formulario para ingresar una nueva cancha al complejo
 @login_required
 def cancha_nueva(request):
     if request.method == "POST":
@@ -53,15 +57,15 @@ def cancha_nueva(request):
             cancha = form.save(commit=False)
             id_comple = Complejo.objects.get(usuario_id=request.user.id)
             cancha.complejo = id_comple
-            cancha.foto_cancha = request.FILES.get('foto_cancha')
             cancha.fecha_creacion = timezone.now()
             cancha.save()
-            messages.success(request, 'Cancha guardada con éxito !')
+            messages.success(request, '¡ Cancha guardada con éxito !')
             return redirect('cancha')
     else:
         form = CanchaForm()
     return render(request, 'app1/cancha_editar.html', {'titulo': 'Agregar cancha', 'form': form})
 
+#Formulario para editar la información de una cancha existente
 @login_required
 def cancha_editar(request, pk):
     cancha = get_object_or_404(Cancha, pk=pk)
@@ -72,10 +76,9 @@ def cancha_editar(request, pk):
             cancha.fecha_creacion = timezone.now()
             #cancha.foto_cancha = request.FILES.get('foto_cancha')
             cancha.save()
-            messages.success(request, 'Cancha modificada con éxito !')
+            messages.success(request, '¡ Cancha modificada con éxito !')
             return redirect('cancha')
     else:
-        print ("metodo get")
         id_comple = Complejo.objects.get(usuario_id=request.user.id)
         canchas = list(Cancha.objects.filter(complejo_id=id_comple))
         cancha_encontrada = False
@@ -84,49 +87,44 @@ def cancha_editar(request, pk):
                 cancha_encontrada = True
         if cancha_encontrada == False:
             messages.error(request, '¡ No tiene acceso a ese enlace !')
-            return redirect('cancha') 
+            return redirect('cancha')
         form = CanchaForm(instance=cancha)
     return render(request, 'app1/cancha_editar.html', {'titulo': 'Editar cancha', 'form': form})
 
+#Listado de reservas activas del Compplejo
 @login_required
 def reserva(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id)
     canchas = list(Cancha.objects.filter(complejo_id=id_comple))
-    reservs = list(Reserva.objects.filter(estado_reserva=1))
-    reservas = []
-    for reserva in reservs:
-    	for cancha in canchas:
-    		if reserva.cancha_id == cancha.id:
-    			reservas.append(reserva)
+    reservas = Reserva.objects.filter(cancha_id__in=canchas, estado_reserva=1).order_by('fecha_reserva', 'hora_inicio')
 
     #Actualización del estado de reservas (Cancelación de reservas vencidas)
     ecuador = pytz.timezone('America/Guayaquil')
     fecha_hoy = datetime.datetime.now(ecuador)
+    hora_actual = fecha_hoy.strftime("%H:%M")
+    hora_actual = datetime.datetime.strptime(hora_actual, "%H:%M").time()
     fecha_hoy = fecha_hoy.strftime("%Y-%m-%d")
     fecha_hoy = datetime.datetime.strptime(fecha_hoy, "%Y-%m-%d").date()
+
     actualizacionReservas = []
     for reserva_act in reservas:
-        if(reserva_act.fecha_reserva < fecha_hoy):
+        if(reserva_act.fecha_reserva == fecha_hoy and reserva_act.hora_fin < hora_actual):
             Reserva.objects.filter(id=reserva_act.id).update(estado_reserva=0)
         else:
             actualizacionReservas.append(reserva_act)
     return render(request, 'app1/reserva.html', {'titulo': 'Listado de reservas activas','reservas': actualizacionReservas})
 
+#Formulario para agregar una nueva reserva
 @login_required
 def reserva_nueva(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id) #Obtener el complejo que le pertenece al administador logueado
     canchas = list(Cancha.objects.filter(complejo_id=id_comple)) #Obtener las canchas que le pertenecen a ese complejo
-    reservs = list(Reserva.objects.filter(estado_reserva=1)) #Obtener todas las reservas
-    reservas = [] #Arreglo para guardar todas las reservas del complejo
-    for reserva1 in reservs: #Recorrer todas las reservas
-        for cancha in canchas: #Recorrer todas las canchas del complejo
-            if reserva1.cancha_id == cancha.id:
-            	reservas.append(reserva1) #Si la cancha reservada es igual a una cancha del complejo se agrega la reserva al arreglo
+    reservas = Reserva.objects.filter(cancha_id__in=canchas, estado_reserva=1)
+
     if request.method == "POST": #Si se envia datos del formulario:
     	form = ReservaForm(request.POST)
     	if form.is_valid(): #Si el formulario es válido:
             reserva = form.save(commit=False) #Los datos enviados no se guardan aún
-			# if para definir el horario de entrada y salida: 08:00 a 23:00
             #Control para el input de usuario:
             user_ing = User.objects.get(id=reserva.usuario.id) #Se obtiene el usuario ingresado
             if user_ing.is_staff == 1: #Si el usuario ingresado es staff:
@@ -168,7 +166,7 @@ def reserva_nueva(request):
                         return redirect('reserva')
                 reserva.fecha_creacion = timezone.now()
                 reserva.save()
-                messages.success(request, 'Reserva guardada con éxito')
+                messages.success(request, '¡ Reserva guardada con éxito !')
                 return redirect('reserva')
             else:
                 messages.error(request, 'Este cancha no pertenece al complejo')
@@ -176,10 +174,17 @@ def reserva_nueva(request):
     else:
         id_comple = Complejo.objects.get(usuario_id=request.user.id)
         canchas = list(Cancha.objects.filter(complejo_id=id_comple, estado_cancha=1))
-        usuarios = list(User.objects.filter(is_staff=0))
+        usuarios_suscritos = Suscripcion.objects.filter(complejo_id=id_comple, suscripcion=1)
+        suscritos = []
+        for usuario_suscrito in usuarios_suscritos:
+            suscritos.append(usuario_suscrito.usuario_id)
+        Usuario_final = User.objects.get(username='Usuario_final')
+        suscritos.append(Usuario_final.id)
+        usuarios = User.objects.filter(is_staff=0, id__in=suscritos)
         form = ReservaForm()
     return render(request, 'app1/reserva_editar.html', {'titulo': 'Agregar reserva', 'form': form, 'canchas': canchas, 'usuarios': usuarios, 'complejo': id_comple})
 
+#Formulario para cancelar la reserva
 @login_required
 def reserva_editar(request, pk):
     reserva = get_object_or_404(Reserva, pk=pk)
@@ -188,7 +193,6 @@ def reserva_editar(request, pk):
         messages.success(request, '¡ Reserva cancelada !')
         return redirect('reserva')
     else:
-        print ("metodo get")
         id_comple = Complejo.objects.get(usuario_id=request.user.id)
         canchas = list(Cancha.objects.filter(complejo_id=id_comple))
         reserva_encontrada = False
@@ -197,28 +201,38 @@ def reserva_editar(request, pk):
                 reserva_encontrada = True
         if reserva_encontrada == False or reserva.estado_reserva == False:
             messages.error(request, '¡ No tiene acceso a ese enlace !')
-            return redirect('reserva') 
-    return render(request, 'app1/reserva_modificar.html', {'titulo': 'Cancelar reserva'})
+            return redirect('reserva')
+    return render(request, 'app1/reserva_modificar.html', {'titulo': 'Cancelar reserva', 'reserva': reserva})
 
+#Reporte de todas las reservas realizadas (activas e inactivas)
 @login_required
 def reporte_reservas(request):
     id_comple = Complejo.objects.get(usuario_id=request.user.id)
     canchas = list(Cancha.objects.filter(complejo_id=id_comple))
-    reservas = Reserva.objects.filter(cancha_id__in=canchas)
-    
+    reservas = Reserva.objects.filter(cancha_id__in=canchas).order_by('fecha_reserva', 'hora_inicio')
+
     consulta_mes = request.GET.get("buscar_mes")
     consulta_desde = request.GET.get("buscar_desde")
     consulta_hasta = request.GET.get("buscar_hasta")
     if consulta_mes:
-        reservas = Reserva.objects.filter(Q(fecha_reserva__icontains = consulta_mes), cancha_id__in=canchas)
+        reservas = Reserva.objects.filter(Q(fecha_reserva__icontains = consulta_mes), cancha_id__in=canchas).order_by('fecha_reserva', 'hora_inicio')
     elif consulta_desde or consulta_hasta:
         if (consulta_desde == "") or (consulta_hasta == ""):
             messages.error(request, 'Si desea buscar por rango de fechas debe llenar ambos campos (desde - hasta)')
-            return redirect('reporte_reservas') 
+            return redirect('reporte_reservas')
         else:
-            reservas = Reserva.objects.filter(Q(fecha_reserva__range=[consulta_desde, consulta_hasta]), cancha_id__in=canchas)
+            reservas = Reserva.objects.filter(Q(fecha_reserva__range=[consulta_desde, consulta_hasta]), cancha_id__in=canchas).order_by('fecha_reserva', 'hora_inicio')
     nro_reservas = reservas.count()
     total_ingresos = 0
     for reserva in reservas:
         total_ingresos = total_ingresos + reserva.valor_total
-    return render(request, 'app1/reporte_reservas.html', {'reservas': reservas, 'nro_reservas': nro_reservas, 'total_ingresos': total_ingresos})
+
+    paginator = Paginator(reservas, 8)
+    page = request.GET.get('page')
+    reservas = paginator.get_page(page)
+
+    parametros = request.GET.copy()
+    if parametros.get('page') != None:
+        del parametros['page']
+
+    return render(request, 'app1/reporte_reservas.html', {'reservas': reservas, 'parametros': parametros, 'nro_reservas': nro_reservas, 'total_ingresos': total_ingresos})

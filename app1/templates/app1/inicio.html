@@ -12,8 +12,8 @@ background: url(media/{{complejo.foto_complejo}});">
                 <h3 class="cta-title" > ¡ RESERVA ONLINE Y JUEGA YA !</h3>
                 <h3 class="cta-title">{{complejo.nombre_complejo}}</h3>
                 <h4 class="cta-text"> Fácil, rápido y seguro </h4>
-                <h5 class="cta-text">{{complejo.direccion_complejo}}</h5>
-                <h6 class="cta-text">{{complejo.telefono_complejo}}</h6>
+                <h4 class="cta-text"><b>{{complejo.direccion_complejo}}</b></h4>
+                <h4 class="cta-text"><b>{{complejo.telefono_complejo}}</b></h4>
                 <input id="hidden" type="hidden" value="{{complejo.puntuacion_complejo}}">
                 <div id="stars" class="cta-text" style="font-size:35px;"></div>
                 <script>
@@ -41,30 +41,26 @@ background: url(media/{{complejo.foto_complejo}});">
             <div class="col-lg-4 col-md-4">
                 <div class="contact-about">
                     <h3>Futbolito</h3>
-                    <p>
-                        Es un complejo deportivo que ofrece el servicio de alquiler de canchas sintéticas de fútbol a los habitantes de la ciudad de Loja y del País, que les guste entretenerse y divertirse jugando al fútbol, haciéndolos sentir parte de nosotros y superando sus expectativas en cuanto a la calidad en el servicio. Comprometidos con nuestros usuarios, podrás encontrar servicio como:
-                        Información de canchas, precio, horarios, así mismo te permitirá reservar en las mejores canchas sintéticas que tenemos, de una forma más óptima y actualizada, para divertirte y compartir grandes momentos con tus familiares y amigos:
+                    <p style="text-align: justify;">
+                        Es una aplicación web/móvil que permite la automatización de la información de los Complejos Deportivos que ofrecen el servicio de alquiler de canchas sintéticas de fútbol, brindando un tratamiento óptimo que facilita el desarrollo de las actividades diarias de estos centros. Comprometidos también con lo clientes de nuestros complejos, Futbolito cuenta con una aplicación móvil en la que sus usuarios podrán encontrar: Información de los complejos y sus canchas, y podrán realizar sus reservaciones de una forma óptima y segura, para que te diviertas y compartas grandes momentos con tus familiares y amigos:
                         “ Si no te esfuerzas hasta el máximo ¿Cómo sabrás donde está tu límite? ”
                     </p>
-
                 </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4">
+              
                 <div class="info">
-                    <div>
+                    <b>Contáctenos:</b> 
                         <i class="ion-ios-location-outline"></i>
-                        <p>{{complejo.direccion_complejo}} Loja-Ecuador</p>
-                    </div>
-
-                    <div>
                         <i class="ion-ios-telephone-outline"></i>
-                        <p>{{complejo.telefono_complejo}}</p>
-                    </div>
+                        <h6>0959132167</h6>
+                        <h6>Loja-Ecuador</h6>
                 </div>
+           
+
             </div>
 
-            <div class="col-lg-5 col-md-8">
+            
+
+            <div class="col-lg-8 col-md-10">
                 <div class="form">
                     <div id="sendmessage">Your message has been sent. Thank you!</div>
                     <div id="errormessage"></div>
@@ -74,7 +70,7 @@ background: url(media/{{complejo.foto_complejo}});">
                 {% if user.is_authenticated %}
 
                 <h3>Comentarios</h3>
-                <div class="list-group" style="overflow: scroll; width: 470px; height: 350px;">
+                <div class="list-group" style="overflow: scroll; width: 720px; height: 350px;">
                     <ul class="list-group">
                         {% for comentario in comentarios %}
                         <li class="list-group-item">

@@ -3,7 +3,7 @@ Seleccionar una de las canchas del complejo -->
 {% extends 'app1/base.html' %}
 {% block content %}
 <section id="call-to-action">
-<div class="container">
+
   <!-- Cambio en modelos: codigo_cancha > unico -->
   {% if messages %}
   <div class="row">
@@ -18,11 +18,11 @@ Seleccionar una de las canchas del complejo -->
   {% endif %}
     <h1>{{ titulo }}</h1>
     <div>
-      <a href="{% url 'reserva_nueva' %}" class="btn btn-primary"><span class="glyphicon glyphicon-plus">Añadir nueva reserva</span></a>
+      <a href="{% url 'reserva_nueva' %}" class="btn btn-primary"><span class="glyphicon glyphicon-plus">AÑADIR NUEVA RESERVA</span></a>
     </div>
     <div class="table-responsive">
     <table class="table table-striped table-dark">
-        <caption style="color: #f8f9fa">Lista de reservas</caption>
+       <!-- <caption style="color: #f8f9fa">Lista de reservas</caption> -->
       <thead>
         <tr>
           <th scope="col">Código</th>
@@ -33,13 +33,14 @@ Seleccionar una de las canchas del complejo -->
           <th scope="col">Hora fin</th>
           <th scope="col">Valor unitario</th>
           <th scope="col">Valor total</th>
-          <th scope="col">Estado de reserva</th>
+          <!--<th scope="col">Estado de reserva</th>-->
+          <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody>
         {% for reserva in reservas %}
         <tr>
-          <td><a href="{% url 'reserva_enlace' pk=reserva.pk %}">0000{{ reserva.id }}</a></td>
+          <td><a title="Cancelar reserva" href="{% url 'reserva_enlace' pk=reserva.pk %}">0000{{ reserva.id }}</a></td>
           <td>{{ reserva.usuario }}</td>
           <td>{{ reserva.cancha }}</td>
           <td>{{ reserva.fecha_reserva }}</td>
@@ -47,19 +48,20 @@ Seleccionar una de las canchas del complejo -->
           <td>{{ reserva.hora_fin }}</td>
           <td>{{ reserva.valor_unitario }}</td>
           <td>{{ reserva.valor_total }}</td>
-          <td> 
+          <!--<td> 
             {% if reserva.estado_reserva %} 
               Activa
             {%else%}
               Inactiva
             {%endif%}
-          </td>
+          </td> -->
+          <td><a href="{% url 'reserva_enlace' pk=reserva.pk %}" class="btn btn-secondary">CANCELAR</a></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     
   </div>
-</div>
+
 </section>
 {% endblock %}
