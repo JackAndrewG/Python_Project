@@ -3,44 +3,56 @@
 {% block content %}
 <section id="call-to-action">
     <div class="container">
-<div class="col-sm-12">
-	<h1>{{ titulo }}</h1>
-    	<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-			<div class="form-row">
-				<div class="form-group col-md-4">
-                    <label for="descripcion_cancha">Nombre de la Cancha:</label>
-                    {{ form.descripcion_cancha }}
-				</div>
-            </div>
-            <div class="form-row">
-				<div class="form-group col-md-2">
-                    <label for="valor_dia">Valor en el día:</label>
-                    {{ form.valor_dia }}
-				</div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label for="valor_noche">Valor en la noche:</label>
-                    {{ form.valor_noche }}
+        <div class="col-sm-12">
+        	<h1>{{ titulo }}</h1>
+            <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+        	   <div class="form-row">
+        			<div class="form-group col-md-4">
+                        {% if form.descripcion_cancha.errors %}
+                            <p>Ingresar un nombre que se pueda identificar.</p>
+                        {% endif %}
+                        <label for="descripcion_cancha">Nombre de la Cancha:</label>
+                        {{ form.descripcion_cancha }}
+        			</div>
                 </div>
-            </div>
-            <div class="form-row">
-				<div class="form-group col-md-5">
-                    <label for="foto_cancha">Foto:</label>
-                    <br>
-                    {{ form.foto_cancha }}
+                <div class="form-row">
+        			<div class="form-group col-md-2">
+                        {% if form.valor_dia.errors %}
+                            <p>Ingrese un valor correcto.</p>
+                        {% endif %}
+                        <label for="valor_dia">Valor en el día:</label>
+                        {{ form.valor_dia }}
+        			</div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label for="estado_cancha">Estado:</label>
-                    {{ form.estado_cancha }}
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        {% if form.valor_noche.errors %}
+                            <p>Ingrese un valor correcto.</p>
+                        {% endif %}
+                        <label for="valor_noche">Valor en la noche:</label>
+                        {{ form.valor_noche }}
+                    </div>
                 </div>
-			</div>
-        	<input class="btn btn-primary" type="submit" value="Guardar">
-    	</form>
-</div>
-</div>
+                    <div class="form-row">
+        				<div class="form-group col-md-5">
+                            {% if form.foto_cancha.errors %}
+                                <p>Suba el archivo en el formato indicado.</p>
+                            {% endif %}
+                            <label for="foto_cancha">Foto:</label>
+                            <br>
+                            {{ form.foto_cancha }}
+                        </div>
+                    </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="estado_cancha">Estado:</label>
+                        {{ form.estado_cancha }}
+                    </div>
+        		</div>
+                <input class="btn btn-primary" type="submit" value="Guardar">
+            </form>
+        </div>
+    </div>
 </section>
 {% endblock %}
 

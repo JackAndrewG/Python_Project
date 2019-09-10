@@ -23,7 +23,7 @@ class Complejo (models.Model):
 
 class Cancha (models.Model):
     complejo = models.ForeignKey(Complejo, on_delete=models.CASCADE)
-    descripcion_cancha = models.CharField(max_length=200, default='Cancha de fútbol Nro 1')
+    descripcion_cancha = models.CharField(max_length=40, default='Cancha de fútbol Nro 1')
     valor_dia = models.DecimalField(max_digits=7, decimal_places=2)
     valor_noche = models.DecimalField(max_digits=7, decimal_places=2, default=0)
     foto_cancha = models.ImageField(upload_to='images/canchas_images', null=True, blank=True, validators=[valid_extension])

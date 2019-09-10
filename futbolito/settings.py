@@ -25,7 +25,7 @@ SECRET_KEY = 'b*jsfdvm28xj4qp4#b43%cuj$m5jstnmq3h&$c%6co!&#a^!*4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '192.168.0.15'] #<Ip de pc me
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '192.168.1.103'] #<Ip de pc me
 
 
 # Application definition
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 1000,
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [

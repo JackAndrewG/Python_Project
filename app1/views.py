@@ -108,11 +108,11 @@ def reserva(request):
 
     actualizacionReservas = []
     for reserva_act in reservas:
-        if(reserva_act.fecha_reserva == fecha_hoy and reserva_act.hora_fin < hora_actual):
+        if(reserva_act.fecha_reserva < fecha_hoy):
             Reserva.objects.filter(id=reserva_act.id).update(estado_reserva=0)
         else:
             actualizacionReservas.append(reserva_act)
-    return render(request, 'app1/reserva.html', {'titulo': 'Listado de reservas activas','reservas': actualizacionReservas})
+    return render(request, 'app1/reserva.html', {'titulo': 'Listado de reservas activas', 'reservas': actualizacionReservas})
 
 #Formulario para agregar una nueva reserva
 @login_required
@@ -193,15 +193,22 @@ def reserva_editar(request, pk):
         messages.success(request, '¡ Reserva cancelada !')
         return redirect('reserva')
     else:
+        ecuador = pytz.timezone('America/Guayaquil')
+        fecha_hoy = datetime.datetime.now(ecuador)
+        hora_actual = fecha_hoy.strftime("%H:%M")
+        hora_actual = datetime.datetime.strptime(hora_actual, "%H:%M").time()
+        fecha_hoy = fecha_hoy.strftime("%Y-%m-%d")
+        fecha_hoy = datetime.datetime.strptime(fecha_hoy, "%Y-%m-%d").date()
         id_comple = Complejo.objects.get(usuario_id=request.user.id)
         canchas = list(Cancha.objects.filter(complejo_id=id_comple))
         reserva_encontrada = False
         for cancha in canchas:
             if reserva.cancha == cancha:
                 reserva_encontrada = True
-        if reserva_encontrada == False or reserva.estado_reserva == False:
+        if reserva_encontrada == False or reserva.estado_reserva == False or (reserva.fecha_reserva == fecha_hoy and reserva.hora_fin < hora_actual):
             messages.error(request, '¡ No tiene acceso a ese enlace !')
             return redirect('reserva')
+
     return render(request, 'app1/reserva_modificar.html', {'titulo': 'Cancelar reserva', 'reserva': reserva})
 
 #Reporte de todas las reservas realizadas (activas e inactivas)
