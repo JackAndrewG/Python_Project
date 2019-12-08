@@ -17,7 +17,7 @@ virtualenv env
 - Activar entorno virtual env/Scripts/ -> activate ó source env/Scripts/activate
 - Instalar conector a base de datos:
 ```
-pip install cymysql
+pip install django-cymysql
 ```
 - Verificar archivo settings: /futbolito/settings.py
 ```
