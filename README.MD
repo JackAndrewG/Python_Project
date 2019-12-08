@@ -15,9 +15,10 @@ pip install virtualenv
 virtualenv env
 ```
 - Activar entorno virtual env/Scripts/ -> activate ó source env/Scripts/activate
-- Instalar conector a base de datos:
+- Instalar conector a base de datos y configuracion de lenguaje:
 ```
 pip install django-cymysql
+python -m pip install Pillow
 ```
 - Verificar archivo settings: /futbolito/settings.py
 ```
