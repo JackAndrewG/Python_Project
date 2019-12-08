@@ -15,7 +15,7 @@ pip install virtualenv
 virtualenv env
 ```
 - Activar entorno virtual env/Scripts/ -> activate ó source env/Scripts/activate
-- Instalar conector a base de datos y configuracion de lenguaje:
+- Instalar conector a base de datos y libreria para cargar archivos:
 ```
 pip install django-cymysql
 python -m pip install Pillow
