@@ -1,4 +1,6 @@
 -----LEVANTAR SERVIDOR ----
+------------------------
+------------------------
 - Instalar python
 - Añadir pip a variables de entorno
 - Instalar Django con : pip install Django
@@ -22,7 +24,7 @@
     CREATE USER 'AdminFutbolito'@'localhost' IDENTIFIED BY 'futbolito';
     GRANT ALL PRIVILEGES ON * . * TO 'AdminFutbolito'@'localhost';
 
--Dirigirse a ruta de proyecto Python y ejecutar las migraciones de los modelos a la base de datos:
+- Dirigirse a ruta de proyecto Python y ejecutar las migraciones de los modelos a la base de datos:
     python manage.py makemigrations app1
     python manage.py migrate app1
 
