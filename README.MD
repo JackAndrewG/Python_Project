@@ -4,21 +4,21 @@ LEVANTAR SERVIDOR
 - Añadir pip a variables de entorno
 - Instalar Django con : 
 ```
-pip install Django
+    pip install Django
 ```
 - Instalar entorno virtual python: 
 ```        
-pip install virtualenv
+    pip install virtualenv
 ```
 - Crear entorno virtual en directorio deseado con: 
 ```
-virtualenv env
+    virtualenv env
 ```
 - Activar entorno virtual env/Scripts/ -> activate ó source env/Scripts/activate
 - Instalar conector a base de datos y libreria para cargar archivos:
 ```
-pip install django-cymysql
-python -m pip install Pillow
+    pip install django-cymysql
+    python -m pip install Pillow
 ```
 - Verificar archivo settings: /futbolito/settings.py
 ```
@@ -49,7 +49,7 @@ python -m pip install Pillow
 
 - Crear superusuario por consola:
 ```
-python manage.py createsuperuser
+    python manage.py createsuperuser
 ```
 - Instlación de librerias Django:
 ```
