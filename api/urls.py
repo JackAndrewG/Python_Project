@@ -6,9 +6,9 @@ from api import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'complejos', views.ComplejoViewSet)
-router.register(r'canchas', views.CanchaViewSet, base_name='canchas')
-router.register(r'reservas', views.ReservaViewSet, base_name='reservas')
-router.register(r'suscripcion', views.SuscripcionViewSet, base_name='suscripciones')
+router.register(r'canchas', views.CanchaViewSet, basename='canchas')
+router.register(r'reservas', views.ReservaViewSet, basename='reservas')
+router.register(r'suscripcion', views.SuscripcionViewSet, basename='suscripciones')
 
 urlpatterns = [
     path('', include(router.urls)),
